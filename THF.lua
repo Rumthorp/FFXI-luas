@@ -55,6 +55,7 @@ profile.Sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
+
     },
     Accuracy = {
         Head = 'Optical Hat',
@@ -112,20 +113,6 @@ profile.Sets = {
         Legs = 'Raven Hose',
         Feet = 'Dance Shoes',
     },
-    MaxEvasion = {
-        Head = 'Emperor Hairpin',
-        Neck = 'Evasion Torque',
-        Ear1 = 'Novia Earring',
-        Ear2 = 'Suppanomimi',
-        Body = 'Scorpion Harness',
-        Hands = 'War Gloves +1',
-        Ring1 = 'Emerald Ring',
-        Ring2 = 'Emerald Ring',
-        Back = 'Boxer\'s Mantle',
-        Waist = 'Scouter\'s Rope',
-        Legs = 'Raven Hose',
-        Feet = 'Dance Shoes',
-    },
     EnmityMinus = {
         Head = 'Patroclus\'s Helm',
         Ear2 = 'Novia Earring',
@@ -139,13 +126,6 @@ profile.Sets = {
         Neck = 'Nanaa\'s Charm',
         Hands = 'Assassin\'s Armlets',
         Legs = 'Assassin\'s Culottes'
-    },
-    MinusHP = {
-        Ear2 = 'Astral Earring',
-        Body = 'Blue Cotehardie',
-        Ring1 = 'Astral Ring',
-        Ring2 = 'Astral Ring',
-        Waist = 'Scouter\'s Rope',
     },
     Steal = {
         Main = 'Btm. Knife',
@@ -206,6 +186,10 @@ profile.Sets = {
         Legs = 'Magna M Chausses',
         Feet = 'Bounding Boots',
     },
+    Precast = {
+        Ear1 = 'Loquac. Earring',
+        Legs = 'Homam Cosciales',
+    },
     Recast = {
         Head = 'Homam Zucchetto',
         Ear1 = 'Loquac. Earring',
@@ -214,10 +198,6 @@ profile.Sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
-    },
-    Precast = {
-        Ear1 = 'Loquac. Earring',
-        Legs = 'Homam Cosciales',
     },
     AccuracyRA = {
         Head = 'Optical Hat',
