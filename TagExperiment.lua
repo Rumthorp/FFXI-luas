@@ -13,7 +13,6 @@ local function ParseActionPacket(e)
         bitOffset = bitOffset + length;
         return value;
     end
-
     local actionPacket = T {};
     bitData = e.data_raw;
     bitOffset = 40;
@@ -25,7 +24,6 @@ local function ParseActionPacket(e)
     actionPacket.Type = UnpackBits(4);
     actionPacket.Id = UnpackBits(32);
     actionPacket.Recast = UnpackBits(32);
-
     actionPacket.Targets = T {};
     if (targetCount > 0) then
         for i = 1, targetCount do
@@ -43,7 +41,6 @@ local function ParseActionPacket(e)
                     action.Param = UnpackBits(17);
                     action.Message = UnpackBits(10);
                     action.Flags = UnpackBits(31);
-
                     local hasAdditionalEffect = (UnpackBits(1) == 1);
                     if hasAdditionalEffect then
                         local additionalEffect = {};
@@ -52,7 +49,6 @@ local function ParseActionPacket(e)
                         additionalEffect.Message = UnpackBits(10);
                         action.AdditionalEffect = additionalEffect;
                     end
-
                     local hasSpikesEffect = (UnpackBits(1) == 1);
                     if hasSpikesEffect then
                         local spikesEffect = {};
@@ -61,14 +57,12 @@ local function ParseActionPacket(e)
                         spikesEffect.Message = UnpackBits(10);
                         action.SpikesEffect = spikesEffect;
                     end
-
                     target.Actions:append(action);
                 end
             end
             actionPacket.Targets:append(target);
         end
     end
-
     return actionPacket;
 end
 
@@ -77,7 +71,31 @@ local function isMob(id)
     return bit.band(id, 0xFF000000) ~= 0;
 end
 
-local function onAction(e)
+local OnAction = function(e, profile)
+    local playerEntity = GetPlayerEntity();
+    local playerId;
+    if (playerEntity) then
+        playerId = playerEntity.ServerId;
+    else
+        return;
+    end
+    local actorId = ashita.bits.unpack_be(e.data_raw, 0, 40, 32);
+    if (actorId ~= playerId) then
+        return;
+    end
+    local actionPacket = ParseActionPacket(e);
+    for _, target in ipairs(actionPacket.Targets) do
+        for _, action in ipairs(target.Actions) do
+            if (action.Message == 327) then
+                profile.LockCasting = true;
+            else
+                profile.LockCasting = false;
+            end
+        end
+    end
+end
+
+local function OnActionThf(e)
     local playerEntity = GetPlayerEntity();
     local playerId;
     if (playerEntity) then
@@ -122,7 +140,8 @@ local function onAction(e)
 end
 
 local deathMes = T { 6, 20, 97, 113, 406, 605, 646 };
-local function onMessage(e)
+
+local function OnMessageThf(e)
     local message = struct.unpack('i2', e.data, 0x18 + 1);
     if (deathMes:contains(message)) then
         local target = struct.unpack('i4', e.data, 0x08 + 1);
@@ -131,30 +150,29 @@ local function onMessage(e)
 end
 
 -- Clear tagged mob table on zone
-local function onZone(e)
+local function OnZoneThf(e, profile)
+    profile.LockCasting = false;
     taggedMobs = T {};
 end
 
+local OnZone = function(e, profile)
+    profile.LockCasting = false;
+end
+
 -- Call this function to determine if the current target/subtarget has been tagged by you
-local function isTargetTagged()
+local function IsTargetTagged()
     local targetManager = AshitaCore:GetMemoryManager():GetTarget();
     local isSubTargetActive = targetManager:GetIsSubTargetActive();
-
     local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
-
     local tagged = taggedMobs[targetId];
-
     return tagged and os.clock() - tagged < 550;
 end
 
-ashita.events.register('packet_in', 'packet_in_th_cb', function(e)
-    if (e.id == 0x28) then
-        onAction(e);
-    elseif (e.id == 0x29) then
-        onMessage(e);
-    elseif (e.id == 0x0A or e.id == 0x0B) then
-        onZone(e);
-    end
-end);
-
-return isTargetTagged;
+return {
+    OnAction = OnAction,
+    OnActionThf = OnActionThf,
+    OnMessageThf = OnMessageThf,
+    OnZone = OnZone,
+    OnZoneThf = OnZoneThf,
+    IsTargetTagged = IsTargetTagged
+};
