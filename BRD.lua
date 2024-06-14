@@ -381,11 +381,16 @@ profile.OnLoad = function()
     );
     Common.SetDefaultStances(profile, 1, 1, 0, 1, 0);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 3, 1, 3);
+    profile.Mode.InstrumentMode = 1,
     Common.LoadDefaultKeybinds();
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F9 /lac fwd Mode InstrumentMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F9 /lac fwd Mode InstrumentMode Minus');
 end
 
 profile.OnUnload = function()
     Common.UnloadDefaultKeybinds();
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F9 /lac fwd Mode InstrumentMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F9 /lac fwd Mode InstrumentMode Minus');
 end
 
 profile.HandleCommand = function(args)

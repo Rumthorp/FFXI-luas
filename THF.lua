@@ -55,7 +55,6 @@ profile.Sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
-
     },
     Accuracy = {
         Head = 'Optical Hat',
@@ -83,7 +82,7 @@ profile.Sets = {
         Back = 'Boxer\'s Mantle',
         Waist = 'Scouter\'s Rope',
         Legs = 'Raven Hose',
-        Feet = 'Dance Shoes',
+        Feet = 'Dance Shoes'
     },
     DuskMovement = {
         Hands = 'Homam Manopolas',

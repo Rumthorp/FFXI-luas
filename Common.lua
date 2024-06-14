@@ -492,6 +492,24 @@ local ValidPlayerStatus = T{
   'Engaged',
   'Resting'
 };
+local ValidSlots = T{
+  'Main',
+  'Sub',
+  'Range',
+  'Ammo',
+  'Head',
+  'Neck',
+  'Ear1',
+  'Ear2',
+  'Body',
+  'Hands',
+  'Ring1',
+  'Ring2',
+  'Back',
+  'Waist',
+  'Legs',
+  'Feet'
+};
 local VisibleSlots = T{
   'Main',
   'Sub',
@@ -630,8 +648,7 @@ local LoadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F4 /lac fwd Mode TPMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F5 /lac fwd Mode MPMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F6 /lac fwd Mode InterimMode Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F7 /lac fwd Mode InstrumentMode Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F8 /lac fwd Mode ConquestMode Plus');
+  AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F7 /lac fwd Mode ConquestMode Plus');
 
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F1 /lac fwd Mode SpellMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F2 /lac fwd Mode WSMode Minus');
@@ -639,8 +656,7 @@ local LoadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F4 /lac fwd Mode TPMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F5 /lac fwd Mode MPMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F6 /lac fwd Mode InterimMode Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F7 /lac fwd Mode InstrumentMode Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F8 /lac fwd Mode ConquestMode Minus');
+  AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F7 /lac fwd Mode ConquestMode Minus');
 end
 
 local UnloadDefaultKeybinds = function()
@@ -664,8 +680,7 @@ local UnloadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F4 /lac fwd Mode TPMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F5 /lac fwd Mode MPMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F6 /lac fwd Mode InterimMode Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F7 /lac fwd Mode InstrumentMode Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F8 /lac fwd Mode ConquestMode Plus');
+  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F7 /lac fwd Mode ConquestMode Plus');
 
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F1 /lac fwd Mode SpellMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F2 /lac fwd Mode WSMode Minus');
@@ -673,8 +688,7 @@ local UnloadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F4 /lac fwd Mode TPMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F5 /lac fwd Mode MPMode Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F6 /lac fwd Mode InterimMode Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F7 /lac fwd Mode InstrumentMode Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F8 /lac fwd Mode ConquestMode Minus');
+  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F7 /lac fwd Mode ConquestMode Minus');
 end
 
 local DefaultCommandHandles = function(profile, args)
@@ -916,7 +930,7 @@ local RestingGlobal = function (profile, player)
     gFunc.EquipSet(profile.Sets['MaxMP']);
     if (player.MP > profile.MaxMPRestMPThreshhold) then
       if (profile.Sets['MaxMP'].Main == nil and profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
-        gFunc.Equip('Main', 'Pluto\'s Staff'); 
+        gFunc.Equip('Main', ElementalStaffTable.Dark); 
       end
     else
       gFunc.EquipSet(profile.Sets['Resting']);
@@ -924,7 +938,7 @@ local RestingGlobal = function (profile, player)
   elseif (player.MP > profile.RestMPThreshhold) then
     HandleDefaultFunctions['Idle']['Global'](profile, player);
     if (profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
-      gFunc.Equip('Main', 'Pluto\'s Staff'); 
+      gFunc.Equip('Main', ElementalStaffTable.Dark); 
     end
   else
     gFunc.EquipSet(profile.Sets['Resting']);
