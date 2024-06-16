@@ -571,6 +571,14 @@ local ShallowCopySet = function(set)
   return setCopy;
 end
 
+local ShallowCopyArray = function(array)
+  local arrayCopy = {};
+  for i = 1, #array do
+    arrayCopy[i] = array[i]
+  end
+  return arrayCopy;
+end
+
 local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponStances, CustomRangedStances, CustomIdleStances, CustomAmmoStances, RestMPThreshhold, MaxMPRestMPThreshhold, FoodName)
   local WeaponStances = TableConcat(CustomWeaponStances, { 'WarpStaff', 'WarpClub' });
   local IdleStances =  TableConcat(CustomIdleStances, { 'Fishing', 'Helming' });
@@ -776,16 +784,57 @@ local GetVisibleMPThreshhold = function(profile, player, currentGear, action)
   return (MP / maxMP) * 100;
 end
 
-local CombineSets = function(profile, setString, action, player)
+ItemConditions = {};
+ItemConditions.IsDualWielding = function()
+  if (profile.Sets[profile.StanceLookup.WeaponStance[profile.Stance.WeaponStance]].DualWield == true) then 
+    return true;
+  else
+    return false;
+  end
+end
+ItemConditions.IsUsingOClub = function()
+  local currentGear = gData.GetEquipment();
+  if (currentGear.Main == 'Octave Club' or currentGear.Sub == 'Octave Club') then
+    return true;
+  else
+    return false;
+  end
+end
+ItemConditions.IsMoving = function() return gData.GetPlayer().IsMoving; end
+
+local CombineSets = function(profile, setString, action, player, overwrite)
   if (setString == 'MatchSkill') then
-    setString = HandleMatchSkill(action)
+    setString = HandleMatchSkill(action);
+  end
+  local slotSwaps = {};
+  local conditions = {};
+  if (profile.Sets[setString].AltGear ~= nil) then
+    for slot, dataArray in pairs(profile.Sets[setString].AltGear) do
+      for _, data in ipairs(dataArray) do
+        local doSwap = false;
+        if (conditions[data.Condition] == true) then
+          doSwap = true;
+        elseif (ItemConditions[data.Condition]() == true) then
+          doSwap = true;
+        end
+        if (doSwap == true) then
+          slotSwaps[slot] = data.Name;
+          conditions[data.Condition] = true;
+          goto innerFinish;
+        end
+        ::innerFinish::
+      end
+    end
   end
   if (profile.Sets[setString] ~= nil) then
     for slot, item in pairs(profile.Sets[setString]) do
-      if (ThreshholdRingLookup:contains(item) and player.TP >= 1000) then goto continue; end
       if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
-      if (profile.workingSet[slot] ~= nil) then goto continue; end
-      profile.workingSet[slot] = item;
+      if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
+      if (slotSwaps[slot] ~= nil) then
+        profile.workingSet[slot] = slotSwaps[slot];
+      else
+        profile.workingSet[slot] = item;
+      end
       ::continue::
     end
   end
@@ -797,34 +846,60 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear)
   if (setString == 'MatchSkill') then
     setString = HandleMatchSkill(action)
   end
-  if (profile.SetEquipOrder[setString] ~= nil) then
-    for _, slot in ipairs(profile.SetEquipOrder[setString]) do
-      local item = profile.Sets[setString][slot];
-      local newItemMp = 0;
-      local oldItemMp = 0;
-      if (ThreshholdRingLookup:contains(item) and player.TP >= 1000) then goto continue; end
-      if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
-      if (profile.workingSet[slot] ~= nil) then goto continue; end
-      if (MPGear[item] ~= nil) then
-        newItemMp = MPGear[item].MP;
-      end
-      if (currentGear[slot] ~= nil) then
-        if (MPGear[currentGear[slot].Name] ~= nil) then
-          oldItemMp = MPGear[currentGear[slot].Name].MP;
+  local slotSwaps = {};
+  local conditions = {};
+  if (profile.Sets[setString].AltGear ~= nil) then
+    for slot, dataArray in pairs(profile.Sets[setString].AltGear) do
+      for _, data in ipairs(dataArray) do
+        local doSwap = false;
+        if (conditions[data.Condition] == true) then
+          doSwap = true;
+        elseif (ItemConditions[data.Condition]() == true) then
+          doSwap = true;
         end
-      end
-      if (oldItemMp > newItemMp) then
-        if (currentMissingMp - (oldItemMp - newItemMp) >= 0) then
-          newSet[slot] = item;
-          currentMissingMp = currentMissingMp - (oldItemMp - newItemMp);
+        if (doSwap == true) then
+          slotSwaps[slot] = data.Name;
+          conditions[data.Condition] = true;
+          goto innerFinish;
         end
-      else
-        newSet[slot] = item;
-        currentMissingMp = currentMissingMp + (newItemMp - oldItemMp);
+        ::innerFinish::
       end
-      ::continue::
     end
   end
+  local EquipOrder;
+  if (profile.Sets[setString].EquipOrder ~= nil) then
+    EquipOrder = ShallowCopyArray(profile.Sets[setString].EquipOrder)
+  else
+
+  end
+
+  for _, data in ipairs(EquipOrder) do
+    local slot = data.Slot;
+    local item = profile.Sets[setString][slot];
+    local newItemMp = 0;
+    local oldItemMp = 0;
+    if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
+    if (profile.workingSet[slot] ~= nil) then goto continue; end
+    if (MPGear[item] ~= nil) then
+      newItemMp = MPGear[item].MP;
+    end
+    if (currentGear[slot] ~= nil) then
+      if (MPGear[currentGear[slot].Name] ~= nil) then
+        oldItemMp = MPGear[currentGear[slot].Name].MP;
+      end
+    end
+    if (oldItemMp > newItemMp) then
+      if (currentMissingMp - (oldItemMp - newItemMp) >= 0) then
+        newSet[slot] = item;
+        currentMissingMp = currentMissingMp - (oldItemMp - newItemMp);
+      end
+    else
+      newSet[slot] = item;
+      currentMissingMp = currentMissingMp + (newItemMp - oldItemMp);
+    end
+    ::continue::
+  end
+
   profile.workingCurrentMissingMp = currentMissingMp;
   profile.workingSet = newSet;
 end

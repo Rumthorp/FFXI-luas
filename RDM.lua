@@ -56,7 +56,7 @@ profile.Sets = {
         AltGear = {
             Ear2 = {
                 { Condition = 'IsDualWielding', Name = 'Stealth Earring' },
-                { Condition = 'UsingOClub', Name = 'Coral Earring' }
+                { Condition = 'IsUsingOClub', Name = 'Coral Earring' }
             },
             Hands = {
                 { Condition = 'IsMoving', Name = 'Hydra Gloves' }
@@ -80,7 +80,7 @@ profile.Sets = {
         AltGear = {
             Ear2 = {
                 { Condition = 'IsDualWielding', Name = 'Stealth Earring' },
-                { Condition = 'UsingOClub', Name = 'Coral Earring' }
+                { Condition = 'IsUsingOClub', Name = 'Coral Earring' }
             }
         }
     },
@@ -119,7 +119,7 @@ profile.Sets = {
         Head = 'Duelist\'s Chapeau',
         Neck = 'Peacock Amulet',
         Ear1 = 'Hollow Earring',
-        Ear2 = 'Coral Earring',
+        Ear2 = 'Brutal Earring',
         Body = 'Nashira Manteel',
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
@@ -131,7 +131,7 @@ profile.Sets = {
         AltGear = {
             Ear2 = {
                 { Condition = 'IsDualWielding', Name = 'Stealth Earring' },
-                { Condition = 'UsingOClub', Name = 'Coral Earring' }
+                { Condition = 'IsUsingOClub', Name = 'Coral Earring' }
             },
             Hands = {
                 { Condition = 'IsMoving', Name = 'Hydra Gloves' }
