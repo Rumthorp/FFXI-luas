@@ -840,13 +840,17 @@ local CombineSets = function(profile, setString, action, player, overwrite)
   end
 end
 
-local BuildMaxMpSet = function(profile, setString, action, player, currentGear)
+local BuildMaxMpSet = function(profile, setString, action, player, currentGear, overwrite)
+  if (profile.Sets[setString].EquipOrder == nil) then
+    CombineSets(profile, setString, action, player, overwrite);
+    return;
+  end
   local currentMissingMp = profile.workingCurrentMissingMp;
   local newSet = profile.workingSet;
   if (setString == 'MatchSkill') then
     setString = HandleMatchSkill(action)
   end
-  local slotSwaps = {};
+ 
   local conditions = {};
   if (profile.Sets[setString].AltGear ~= nil) then
     for slot, dataArray in pairs(profile.Sets[setString].AltGear) do
@@ -858,24 +862,34 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear)
           doSwap = true;
         end
         if (doSwap == true) then
-          slotSwaps[slot] = data.Name;
+          equipOrderCopy[#equipOrderCopy + 1] = data;
           conditions[data.Condition] = true;
-          goto innerFinish;
+          break;
         end
-        ::innerFinish::
       end
     end
   end
-  local EquipOrder;
-  if (profile.Sets[setString].EquipOrder ~= nil) then
-    EquipOrder = ShallowCopyArray(profile.Sets[setString].EquipOrder)
-  else
-
+  local equipOrderCopy = ShallowCopyArray(profile.Sets[setString].EquipOrder);
+  for slot, data in pairs(swap) do
+    equipOrder[#equipOrder + 1] = { Slot = slot, Name = data.Name, MPValue = data.MPValue };
   end
-
   for _, data in ipairs(EquipOrder) do
     local slot = data.Slot;
     local item = profile.Sets[setString][slot];
+    if (slotSwaps[slot] ~= nil) then
+      return;
+    end
+    for slot, swapData in pairs(slotSwaps) do
+      if (data.MPValue <= swapData.MPValue) then
+        item = 
+      end
+    end
+      if (slotSwaps[slot].MPValue < MPValue) then
+        return;
+      else
+        item = slotSwaps.Name;
+      end
+    end
     local newItemMp = 0;
     local oldItemMp = 0;
     if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
@@ -899,7 +913,6 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear)
     end
     ::continue::
   end
-
   profile.workingCurrentMissingMp = currentMissingMp;
   profile.workingSet = newSet;
 end
