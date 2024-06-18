@@ -841,16 +841,16 @@ local CombineSets = function(profile, setString, action, player, overwrite)
 end
 
 local BuildMaxMpSet = function(profile, setString, action, player, currentGear, overwrite)
+  if (setString == 'MatchSkill') then
+    setString = HandleMatchSkill(action)
+  end
   if (profile.Sets[setString].EquipOrder == nil) then
     CombineSets(profile, setString, action, player, overwrite);
     return;
   end
   local currentMissingMp = profile.workingCurrentMissingMp;
   local newSet = profile.workingSet;
-  if (setString == 'MatchSkill') then
-    setString = HandleMatchSkill(action)
-  end
- 
+  local slotSwaps = {};
   local conditions = {};
   if (profile.Sets[setString].AltGear ~= nil) then
     for slot, dataArray in pairs(profile.Sets[setString].AltGear) do
@@ -862,7 +862,7 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear, 
           doSwap = true;
         end
         if (doSwap == true) then
-          equipOrderCopy[#equipOrderCopy + 1] = data;
+          slotSwaps = data;
           conditions[data.Condition] = true;
           break;
         end
@@ -871,29 +871,17 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear, 
   end
   local equipOrderCopy = ShallowCopyArray(profile.Sets[setString].EquipOrder);
   for slot, data in pairs(swap) do
-    equipOrder[#equipOrder + 1] = { Slot = slot, Name = data.Name, MPValue = data.MPValue };
+    equipOrderCopy[#equipOrderCopy + 1] = { Slot = slot, Name = data.Name, MPValue = data.MPValue };
   end
-  for _, data in ipairs(EquipOrder) do
+  table.sort(equipOrderCopy, function (item1, item2) return item1.MPValue > item2.MPValue end);
+  for _, data in ipairs(equipOrderCopy) do
     local slot = data.Slot;
     local item = profile.Sets[setString][slot];
-    if (slotSwaps[slot] ~= nil) then
-      return;
-    end
-    for slot, swapData in pairs(slotSwaps) do
-      if (data.MPValue <= swapData.MPValue) then
-        item = 
-      end
-    end
-      if (slotSwaps[slot].MPValue < MPValue) then
-        return;
-      else
-        item = slotSwaps.Name;
-      end
-    end
+    if (slotSwaps[slot] ~= nil) return; end
     local newItemMp = 0;
     local oldItemMp = 0;
     if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
-    if (profile.workingSet[slot] ~= nil) then goto continue; end
+    if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
     if (MPGear[item] ~= nil) then
       newItemMp = MPGear[item].MP;
     end
@@ -1130,6 +1118,7 @@ local HandlePrecast = function(profile)
   local player = gData.GetPlayer();
   local action = gData.GetAction();
   local currentGear = gData.GetEquipment();
+  --block gear swaps if hp doesn't make sense
   profile.workingSet = {};
   profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
   local precastSetString = GetPrecastSet(profile, action);
@@ -1151,6 +1140,7 @@ local HandleMidcast = function(profile)
   local player = gData.GetPlayer();
   local action = gData.GetAction();
   local currentGear = gData.GetEquipment();
+    --block gear swaps if hp doesn't make sense
   local midDelay = GetMidDelay(profile, player, action);
   if (midDelay >= .3 and profile.ModeLookup.InterimMode[profile.Mode.InterimMode] ~= 'IgnoreInterim' and SpellTypes[action.Type][action.Name].IgnoreInterim ~= true) then
     profile.workingSet = {};
