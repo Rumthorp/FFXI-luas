@@ -785,14 +785,14 @@ local GetVisibleMPThreshhold = function(profile, player, currentGear, action)
 end
 
 ItemConditions = {};
-ItemConditions.IsDualWielding = function()
+ItemConditions.IsDualWielding = function(profile)
   if (profile.Sets[profile.StanceLookup.WeaponStance[profile.Stance.WeaponStance]].DualWield == true) then 
     return true;
   else
     return false;
   end
 end
-ItemConditions.IsUsingOClub = function()
+ItemConditions.IsUsingOClub = function(profile)
   local currentGear = gData.GetEquipment();
   if (currentGear.Main == 'Octave Club' or currentGear.Sub == 'Octave Club') then
     return true;
@@ -801,11 +801,41 @@ ItemConditions.IsUsingOClub = function()
   end
 end
 ItemConditions.IsMoving = function() return gData.GetPlayer().IsMoving; end
+ItemConditions.ShouldWearOpuntiaRing = function(profile)
+  local player = gData.GetPlayer();
+  local blazeSpikes = gData.GetBuffCount('Blaze Spikes');
+  local iceSpikes = gData.GetBuffCount('Ice Spikes');
+  local shockSpikes = gData.GetBuffCount('Shock Spikes');
+  local missingMP = ((100 / player.MPP) * player.MP) -  player.MP;
+  if (blazeSpikes + iceSpikes + shockSpikes > 0 and (player.Status == 'Engaged' or player.Status == 'Idle')) then
+    if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
+      if (missingMP >= 50) then
+        return true;
+      else
+        return false;
+      end
+    else
+      return true;
+    end
+  end
+  return false;
+end
+ItemConditions.ShouldWearUggPendant = function(profile)
+  local player = gData.GetPlayer();
+  local currentGear = gData.GetEquipment();
+  local action = gData.GetAction();
+  if (51 <= GetVisibleMPThreshhold(profile, player, currentGear, action)) then
+    return true;
+  else
+    return false;
+  end
+end
 
-local CombineSets = function(profile, setString, action, player, overwrite)
+local CombineSets = function(profile, setString, action, overwrite, override)
   if (setString == 'MatchSkill') then
     setString = HandleMatchSkill(action);
   end
+  if (profile.Sets[setString] == nil) then return; end
   local slotSwaps = {};
   local conditions = {};
   if (profile.Sets[setString].AltGear ~= nil) then
@@ -826,24 +856,23 @@ local CombineSets = function(profile, setString, action, player, overwrite)
       end
     end
   end
-  if (profile.Sets[setString] ~= nil) then
-    for slot, item in pairs(profile.Sets[setString]) do
-      if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
-      if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
-      if (slotSwaps[slot] ~= nil) then
-        profile.workingSet[slot] = slotSwaps[slot];
-      else
-        profile.workingSet[slot] = item;
-      end
-      ::continue::
+  for slot, item in pairs(profile.Sets[setString]) do
+    if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub') and override ~= true) then goto continue; end
+    if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
+    if (slotSwaps[slot] ~= nil) then
+      profile.workingSet[slot] = slotSwaps[slot];
+    else
+      profile.workingSet[slot] = item;
     end
+    ::continue::
   end
 end
 
-local BuildMaxMpSet = function(profile, setString, action, player, currentGear, overwrite)
+local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrite)
   if (setString == 'MatchSkill') then
     setString = HandleMatchSkill(action)
   end
+  if (profile.Sets[setString] == nil) then return; end
   if (profile.Sets[setString].EquipOrder == nil) then
     CombineSets(profile, setString, action, player, overwrite);
     return;
@@ -877,7 +906,7 @@ local BuildMaxMpSet = function(profile, setString, action, player, currentGear, 
   for _, data in ipairs(equipOrderCopy) do
     local slot = data.Slot;
     local item = profile.Sets[setString][slot];
-    if (slotSwaps[slot] ~= nil) return; end
+    if (slotSwaps[slot] ~= nil) then return; end
     local newItemMp = 0;
     local oldItemMp = 0;
     if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
@@ -982,51 +1011,38 @@ local GetInstrument = function (profile, action)
   end
 end
 
-local HandleOpuntiaRing = function(profile, player, currentGear)
-  local blazeSpikes = gData.GetBuffCount('Blaze Spikes');
-  local iceSpikes = gData.GetBuffCount('Ice Spikes');
-  local shockSpikes = gData.GetBuffCount('Shock Spikes');
-  if (blazeSpikes + iceSpikes + shockSpikes > 0) then
-    if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-      local currentGear = gData.GetEquipment();
-      BuildMaxMpSet(profile, 'OpuntiaHoop', nil, player, currentGear);
-    else
-      profile.workingSet['Ring1'] = 'Opuntia Hoop';
-    end
-  end
-end
-
 local HandleDefaultFunctions = {};
 local EquipWeapons = function (profile)
-  gFunc.EquipSet(profile.Sets[profile.StanceLookup.WeaponStance[profile.Stance.WeaponStance]]);
-  gFunc.EquipSet(profile.Sets[profile.StanceLookup.RangedStance[profile.Stance.RangedStance]]);
+  CombineSets(profile, profile.StanceLookup.WeaponStance[profile.Stance.WeaponStance], nil, true, true);
+  CombineSets(profile, profile.StanceLookup.RangedStance[profile.Stance.RangedStance], nil, true, true);
 end
 local RestingGlobal = function (profile, player)
   if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-    gFunc.EquipSet(profile.Sets['MaxMP']);
+    CombineSets(profile, 'MaxMP', nil, true);
     if (player.MP > profile.MaxMPRestMPThreshhold) then
       if (profile.Sets['MaxMP'].Main == nil and profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
-        gFunc.Equip('Main', ElementalStaffTable.Dark); 
+        profile.workingSet.Main = ElementalStaffTable.Dark;
       end
     else
-      gFunc.EquipSet(profile.Sets['Resting']);
+      CombineSets(profile, 'Resting', nil, true);
     end
   elseif (player.MP > profile.RestMPThreshhold) then
     HandleDefaultFunctions['Idle']['Global'](profile, player);
     if (profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
-      gFunc.Equip('Main', ElementalStaffTable.Dark); 
+      profile.workingSet.Main = ElementalStaffTable.Dark;
     end
   else
-    gFunc.EquipSet(profile.Sets['Resting']);
+    CombineSets(profile, 'Resting', nil, true);
   end
 end
 local EngagedGlobal = function(profile, player)
   if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-    gFunc.EquipSet(profile.Sets['MaxMP']);
+    CombineSets(profile, 'MaxMP', nil, true);
   else
-    gFunc.EquipSet(profile.Sets[profile.StanceLookup.EngagedStance[profile.Stance.EngagedStance]]);
     if (profile.Sets[profile.ModeLookup.EnmityMode[profile.Mode.EnmityMode]] ~= nil) then
-      gFunc.EquipSet(profile.Sets[profile.ModeLookup.EnmityMode[profile.Mode.EnmityMode]]);
+      CombineSets(profile, profile.ModeLookup.EnmityMode[profile.Mode.EnmityMode], nil, true);
+    else
+      CombineSets(profile, profile.StanceLookup.EngagedStance[profile.Stance.EngagedStance], nil, true);
     end
   end
   if (HandleDefaultFunctions['Engaged'][player.MainJob] ~= nil) then
@@ -1037,34 +1053,24 @@ end
 local EngagedTHF = function(profile, player)
   local SneakAttack = gData.GetBuffCount('Sneak Attack');
   local TrickAttack = gData.GetBuffCount('Trick Attack');
-  if (SneakAttack > 0 and TrickAttack > 0) then 
-    gFunc.EquipSet(profile.Sets['SATA']);
-  elseif (SneakAttack > 0) then 
-    gFunc.EquipSet(profile.Sets['SneakAttack']);
-  elseif (TrickAttack > 0) then 
-    gFunc.EquipSet(profile.Sets['TrickAttack']);
+  if (SneakAttack > 0 and TrickAttack > 0) then
+    CombineSets(profile, 'SATA', nil, true);
+  elseif (SneakAttack > 0) then
+    CombineSets(profile, 'SneakAttack', nil, true);
+  elseif (TrickAttack > 0) then
+    CombineSets(profile, 'TrickAttack', nil, true);
   end
 end
 local IdleGlobal = function(profile, player)
   if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-    gFunc.EquipSet(profile.Sets['MaxMP']);
+    CombineSets(profile, 'MaxMP', nil, true);
   else
-    gFunc.EquipSet(profile.Sets[profile.StanceLookup.IdleStance[profile.Stance.IdleStance]]);
-    if (profile.Sets[profile.ModeLookup.EnmityMode[profile.Mode.EnmityMode]] ~= nil) then
-      gFunc.EquipSet(profile.Sets[profile.ModeLookup.EnmityMode[profile.Mode.EnmityMode]]);
-    end
+    CombineSets(profile, profile.StanceLookup.IdleStance[profile.Stance.IdleStance], nil, true);
   end
   if (HandleDefaultFunctions['Idle'][player.MainJob] ~= nil) then
     HandleDefaultFunctions['Idle'][player.MainJob](profile, player);
   end
   EquipWeapons(profile);
-end
-local IdleBLM = function(profile, player)
-  local currentGear = gData.GetEquipment();
-  profile.workingSet = {};
-  profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
-  HandleOpuntiaRing(profile, player, currentGear);
-  gFunc.EquipSet(profile.workingSet);
 end
 
 HandleDefaultFunctions['Resting'] = {};
@@ -1074,12 +1080,10 @@ HandleDefaultFunctions['Engaged']['Global'] = EngagedGlobal;
 HandleDefaultFunctions['Engaged']['THF'] = EngagedTHF;
 HandleDefaultFunctions['Idle'] = {};
 HandleDefaultFunctions['Idle']['Global'] = IdleGlobal;
-HandleDefaultFunctions['Idle']['BLM'] = IdleBLM;
 local HandleDefault = function(profile)
   local player = gData.GetPlayer();
-  if (gData.GetPlayer().MaxHP == 0) then
-    profile.LockCasting = false;
-  end
+  if (player.MaxHP == 0) then return; end
+  profile.workingSet = {};
   local playerStatus
   if (ValidPlayerStatus:contains(player.Status)) then
     playerStatus = player.Status;
@@ -1090,12 +1094,10 @@ local HandleDefault = function(profile)
     if (profile.SacHPCounter > 1) then goto skip; end
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
       local currentGear = gData.GetEquipment();
-      profile.workingSet = {};
       profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) - player.MP;
-      BuildMaxMpSet(profile, 'SacHP', action, player, currentGear);
-      gFunc.EquipSet(profile.workingSet);
+      BuildMaxMpSet(profile, 'SacHP', action, currentGear, true);
     else
-      gFunc.EquipSet(profile.Sets['SacHP']);
+      CombineSets(profile, 'SacHP', nil, true);
     end
     ::skip::
     if (profile.SacHPCounter >= 4) then
@@ -1105,42 +1107,33 @@ local HandleDefault = function(profile)
     end
   else
     HandleDefaultFunctions[playerStatus]['Global'](profile, player)
-    if (player.IsMoving == true) then
-      if (profile.EngagedSetsWithDusk:contains(profile.StanceLookup.EngagedStance[profile.Stance.EngagedStance]) and player.Status == 'Engaged') then
-        gFunc.EquipSet(profile.Sets['DuskMovement'])
-      end
-        gFunc.EquipSet(profile.Sets['Movement'])
-    end
-  end
-end
-
-local HandlePrecast = function(profile)
-  local player = gData.GetPlayer();
-  local action = gData.GetAction();
-  local currentGear = gData.GetEquipment();
-  --block gear swaps if hp doesn't make sense
-  profile.workingSet = {};
-  profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
-  local precastSetString = GetPrecastSet(profile, action);
-  if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-    BuildMaxMpSet(profile, precastSetString, action, player, currentGear);
-  else 
-    CombineSets(profile, precastSetString, action, player, currentGear);
   end
   gFunc.EquipSet(profile.workingSet);
 end
 
-local InterimCastBLM = function(profile, player, action, currentGear)
-  HandleOpuntiaRing(profile, player, currentGear);
+local HandlePrecast = function(profile)
+  local player = gData.GetPlayer();
+  if (gData.GetPlayer().MaxHP == 0) then return; end
+  local action = gData.GetAction();
+  profile.workingSet = {};
+  local precastSetString = GetPrecastSet(profile, action);
+  if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
+    local currentGear = gData.GetEquipment();
+    profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
+    BuildMaxMpSet(profile, precastSetString, action, currentGear, true);
+  else 
+    CombineSets(profile, precastSetString, action, true);
+  end
+  gFunc.EquipSet(profile.workingSet);
 end
+
 local InterimCastJobFunctions = {};
-InterimCastJobFunctions['BLM'] = InterimCastBLM;
 
 local HandleMidcast = function(profile)
   local player = gData.GetPlayer();
+  if (gData.GetPlayer().MaxHP == 0) then return; end
   local action = gData.GetAction();
   local currentGear = gData.GetEquipment();
-    --block gear swaps if hp doesn't make sense
   local midDelay = GetMidDelay(profile, player, action);
   if (midDelay >= .3 and profile.ModeLookup.InterimMode[profile.Mode.InterimMode] ~= 'IgnoreInterim' and SpellTypes[action.Type][action.Name].IgnoreInterim ~= true) then
     profile.workingSet = {};
@@ -1149,16 +1142,16 @@ local HandleMidcast = function(profile)
     if (set == 'InterruptionInterim') then
       for _, setString in ipairs(SpellPriorityTypes[set]) do
         if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-          BuildMaxMpSet(profile, setString, action, player, currentGear);
+          BuildMaxMpSet(profile, setString, action, currentGear, true);
         else
-          CombineSets(profile, setString, action, player);
+          CombineSets(profile, setString, action, true);
         end
       end
     else
       if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-        BuildMaxMpSet(profile, set, action, player, currentGear);
+        BuildMaxMpSet(profile, set, action, currentGear, true);
       else
-        CombineSets(profile, set, action, player);
+        CombineSets(profile, set, action, player, true);
       end
     end
     if (InterimCastJobFunctions[player.Main] ~= nil) then
@@ -1168,9 +1161,9 @@ local HandleMidcast = function(profile)
     gFunc.InterimEquipSet(setCopy);
     for slot, item in pairs(currentGear) do
       if (profile.workingSet[slot] ~= nil) then
-        local newItem = {}
-        newItem.Name = profile.workingSet[slot]
-        currentGear[slot] = newItem
+        local newItem = {};
+        newItem.Name = profile.workingSet[slot];
+        currentGear[slot] = newItem;
       end
     end
   end
