@@ -39,6 +39,12 @@ profile.Sets = {
     WindStaff = {
         Main = 'Auster\'s Staff'
     },
+    WarpStaff = {
+        Main = 'Treat Staff II'
+    },
+    WarpClub = {
+        Main = 'Warp Club'
+    },
     Damage = {
         Ammo = 'Olibanum Sachet',
         Head = 'Nashira Turban',
@@ -480,6 +486,21 @@ profile.Sets = {
         }
     }
 };
+profile.MaxMPItems = {
+    ['Hedgehog Bomb'] = true,
+    ['Duelist\'s Chapeau'] = true,
+    ['Uggalepih Pendant'] = true,
+    ['Loquac. Earring'] = true,
+    ['Astral Earring'] = true,
+    ['Hydra Doublet'] = true,
+    ['Wood Gauntlets'] = true,
+    ['Vivian Ring'] = true,
+    ['Serket Ring'] = true,
+    ['Errant Cape'] = true,
+    ['Forest Rope'] = true,
+    ['Zenith Slacks'] = true,
+    ['Wood M Ledelsens'] = true
+  }
 profile.Packer = {
 };
 

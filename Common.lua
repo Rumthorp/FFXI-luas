@@ -1,14 +1,14 @@
 local SpellPriorityTypes = {
   ['Recast'] = { 'Recast', 'MatchSkill' },
   ['InterruptionInterim'] = { 'Interruption', 'MatchSkill' },
-  ['CurePotency'] = { 'EleStaff', 'WHMThreshholdRing', 'CurePotency', 'HealingSkill', 'Mnd' },
+  ['CurePotency'] = { 'EleStaff', 'CurePotency', 'HealingSkill', 'Mnd' },
   ['CureEnmityMinus'] = { 'EleStaff', 'EnmityMinus', 'CurePotency', 'HealingSkill', 'Mnd' },
   ['CureEnmityPlus'] = { 'EleStaff', 'EnmityPlus', 'CurePotency', 'HealingSkill', 'Mnd' },
   ['CureEnmityBalanced'] = { 'EleStaff', 'CureEnmityBalanced' },
   ['Regen'] = { 'RegenPotency', 'Recast' },
   ['Stoneskin'] = { 'Mnd' },
   ['EnhancingSkill'] = { 'EnhancingSkill', 'Recast' },
-  ['Spikes'] = { 'BLMThreshholdRing', 'UggPendant', 'RepublicCirclet', 'MagicAttack', 'Int' },
+  ['Spikes'] = { 'MagicAttack', 'Int' },
   ['BarSpell'] = {'WHMBar', 'EnhancingSkill', 'Recast' },
   ['FlashEnmity'] = { 'EleStaff', 'EnmityPlus', 'Recast', 'DivineSkill' },
   ['FlashRecast'] = { 'EleStaff', 'Recast', 'EnmityPlus', 'DivineSkill' },
@@ -18,13 +18,13 @@ local SpellPriorityTypes = {
   ['BlackMagicEnfeebleAccuracy'] = { 'EleStaff', 'EnfeeblingSkill', 'Int' },
   ['BlackMagicCCPotency'] = { 'EleStaff', 'Recast', 'EnfeeblingSkill', 'Int' },
   ['BlackMagicCCAccuracy'] = { 'EleStaff', 'EnfeeblingSkill', 'Recast' },
-  ['WhiteMagicNukePotency'] = { 'EleStaff', 'UggPendant', 'RepublicCirclet', 'MagicAttack', 'Mnd', 'DivineSkill' },
-  ['WhiteMagicNukeAccuracy'] = { 'EleStaff', 'DivineSkill', 'UggPendant', 'RepublicCirclet', 'MagicAttack', 'Mnd' },
-  ['BlackMagicNukePotency'] = { 'EleStaff', 'BLMThreshholdRing', 'UggPendant', 'RepublicCirclet', 'MagicAttack', 'Int' },
-  ['BlackMagicNukeAccuracy'] = { 'EleStaff', 'ElementalSkill', 'BLMThreshholdRing', 'MagicAttack', 'Int' },
-  ['BlackMagicNukeBalanced'] = { 'EleStaff', 'BLMThreshholdRing', 'UggPendant', 'AccuracyPotencyBalanced' },
-  ['BlackMagicNukeEnmity'] = {'EleStaff', 'BLMThreshholdRing', 'UggPendant', 'EnmityMinus', 'MagicAttack', 'Int' },
-  ['BlackMagicNukeEnmityAccuracyBalanced'] = {'EleStaff', 'BLMThreshholdRing', 'UggPendant', 'EnmityAccuracyBalanced' },
+  ['WhiteMagicNukePotency'] = { 'EleStaff', 'MagicAttack', 'Mnd', 'DivineSkill' },
+  ['WhiteMagicNukeAccuracy'] = { 'EleStaff', 'DivineSkill', 'MagicAttack', 'Mnd' },
+  ['BlackMagicNukePotency'] = { 'EleStaff', 'MagicAttack', 'Int' },
+  ['BlackMagicNukeAccuracy'] = { 'EleStaff', 'ElementalSkill', 'MagicAttack', 'Int' },
+  ['BlackMagicNukeBalanced'] = { 'EleStaff', 'AccuracyPotencyBalanced' },
+  ['BlackMagicNukeEnmity'] = {'EleStaff', 'EnmityMinus', 'MagicAttack', 'Int' },
+  ['BlackMagicNukeEnmityAccuracyBalanced'] = {'EleStaff', 'EnmityAccuracyBalanced' },
   ['DarkSkillPotency'] = { 'EleStaff', 'DarkSkill', 'Recast', 'MagicAccuracy' },
   ['DarkSkillAccuracy'] = { 'EleStaff', 'DarkSkill', 'MagicAccuracy', 'Recast' },
   ['DrainAspirPotency'] = { 'EleStaff', 'DarkSkill', 'OverlordsRing', 'Recast', 'MagicAccuracy' },
@@ -477,38 +477,28 @@ local ElementalStaffTable = {
   ['Light'] = 'Apollo\'s Staff',
   ['Dark'] = 'Pluto\'s Staff'
 };
-local ThreshholdRingLookup = T{
-  'Sorcerer\'s Ring',
-  'Rogue\'s Ring',
-  'Minstrel\'s Ring',
-  'Medicine Ring',
-  'Shinobi Ring'
-};
-local ConquestItems = {
-  ['RepublicCirclet'] = 'Inside'
-};
 local ValidPlayerStatus = T{
   'Idle',
   'Engaged',
   'Resting'
 };
-local ValidSlots = T{
-  'Main',
-  'Sub',
-  'Range',
-  'Ammo',
-  'Head',
-  'Neck',
-  'Ear1',
-  'Ear2',
-  'Body',
-  'Hands',
-  'Ring1',
-  'Ring2',
-  'Back',
-  'Waist',
-  'Legs',
-  'Feet'
+local ValidSlots = {
+  Main = true,
+  Sub = true,
+  Range = true,
+  Ammo = true,
+  Head = true,
+  Neck = true,
+  Ear1 = true,
+  Ear2 = true,
+  Body = true,
+  Hands = true,
+  Ring1 = true,
+  Ring2 = true,
+  Back = true,
+  Waist = true,
+  Legs = true,
+  Feet = true
 };
 local VisibleSlots = T{
   'Main',
@@ -794,11 +784,17 @@ ItemConditions.IsDualWielding = function(profile)
 end
 ItemConditions.IsUsingOClub = function(profile)
   local currentGear = gData.GetEquipment();
-  if (currentGear.Main == 'Octave Club' or currentGear.Sub == 'Octave Club') then
-    return true;
-  else
-    return false;
+  if (currentGear.Main ~= nil) then
+    if (currentGear.Main.Name == 'Octave Club') then
+      return true;
+    end
   end
+  if (currentGear.Sub ~= nil) then
+    if (currentGear.Sub.Name == 'Octave Club') then
+      return true;
+    end
+  end
+  return false
 end
 ItemConditions.IsMoving = function() return gData.GetPlayer().IsMoving; end
 ItemConditions.ShouldWearOpuntiaRing = function(profile)
@@ -844,21 +840,24 @@ local CombineSets = function(profile, setString, action, overwrite, override)
         local doSwap = false;
         if (conditions[data.Condition] == true) then
           doSwap = true;
-        elseif (ItemConditions[data.Condition]() == true) then
+        elseif (ItemConditions[data.Condition](profile) == true) then
           doSwap = true;
         end
         if (doSwap == true) then
           slotSwaps[slot] = data.Name;
           conditions[data.Condition] = true;
-          goto innerFinish;
+          break;
         end
-        ::innerFinish::
       end
     end
   end
   for slot, item in pairs(profile.Sets[setString]) do
-    if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub') and override ~= true) then goto continue; end
-    if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
+    if (
+      (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub') and override ~= true) 
+      or ValidSlots[slot] == nil 
+      or (profile.workingSet[slot] ~= nil and overwrite == false)) then 
+        goto continue; 
+    end
     if (slotSwaps[slot] ~= nil) then
       profile.workingSet[slot] = slotSwaps[slot];
     else
@@ -878,6 +877,7 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
     return;
   end
   local currentMissingMp = profile.workingCurrentMissingMp;
+  local totalSwapMP = profile.totalSwapMP;
   local newSet = profile.workingSet;
   local slotSwaps = {};
   local conditions = {};
@@ -887,11 +887,11 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
         local doSwap = false;
         if (conditions[data.Condition] == true) then
           doSwap = true;
-        elseif (ItemConditions[data.Condition]() == true) then
+        elseif (ItemConditions[data.Condition](profile) == true) then
           doSwap = true;
         end
         if (doSwap == true) then
-          slotSwaps = data;
+          slotSwaps[slot] = data;
           conditions[data.Condition] = true;
           break;
         end
@@ -899,18 +899,24 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
     end
   end
   local equipOrderCopy = ShallowCopyArray(profile.Sets[setString].EquipOrder);
-  for slot, data in pairs(swap) do
+  for slot, data in pairs(slotSwaps) do
     equipOrderCopy[#equipOrderCopy + 1] = { Slot = slot, Name = data.Name, MPValue = data.MPValue };
   end
   table.sort(equipOrderCopy, function (item1, item2) return item1.MPValue > item2.MPValue end);
   for _, data in ipairs(equipOrderCopy) do
+    -- gFunc.Echo(255, totalSwapMP)
     local slot = data.Slot;
     local item = profile.Sets[setString][slot];
-    if (slotSwaps[slot] ~= nil) then return; end
+    if (
+      (slotSwaps[slot] ~= nil and slotSwaps[slot].MPValue ~= data.MPValue)
+      or (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub'))
+      or (profile.workingSet[slot] ~= nil and overwrite == false)
+      or ValidSlots[slot] == nil
+    ) then 
+      goto continue; 
+    end
     local newItemMp = 0;
     local oldItemMp = 0;
-    if (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub')) then goto continue; end
-    if (profile.workingSet[slot] ~= nil and overwrite == false) then goto continue; end
     if (MPGear[item] ~= nil) then
       newItemMp = MPGear[item].MP;
     end
@@ -927,10 +933,12 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
     else
       newSet[slot] = item;
       currentMissingMp = currentMissingMp + (newItemMp - oldItemMp);
+      totalSwapMP = newItemMp - oldItemMp;
     end
     ::continue::
   end
   profile.workingCurrentMissingMp = currentMissingMp;
+  profile.totalSwapMP = totalSwapMP;
   profile.workingSet = newSet;
 end
 
@@ -1085,7 +1093,7 @@ local HandleDefault = function(profile)
   if (player.MaxHP == 0) then return; end
   profile.workingSet = {};
   local playerStatus
-  if (ValidPlayerStatus:contains(player.Status)) then
+  if (ValidPlayerStatus:contains(player .Status)) then
     playerStatus = player.Status;
   else
     playerStatus = 'Idle';
@@ -1095,6 +1103,7 @@ local HandleDefault = function(profile)
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
       local currentGear = gData.GetEquipment();
       profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) - player.MP;
+      profile.totalSwapMP = 0;
       BuildMaxMpSet(profile, 'SacHP', action, currentGear, true);
     else
       CombineSets(profile, 'SacHP', nil, true);
@@ -1113,13 +1122,14 @@ end
 
 local HandlePrecast = function(profile)
   local player = gData.GetPlayer();
-  if (gData.GetPlayer().MaxHP == 0) then return; end
+  if (gData.GetPlayer().MaxMP == 0) then return; end
   local action = gData.GetAction();
   profile.workingSet = {};
   local precastSetString = GetPrecastSet(profile, action);
   if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
     local currentGear = gData.GetEquipment();
     profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
+    profile.totalSwapMP = 0;
     BuildMaxMpSet(profile, precastSetString, action, currentGear, true);
   else 
     CombineSets(profile, precastSetString, action, true);
@@ -1128,30 +1138,30 @@ local HandlePrecast = function(profile)
 end
 
 local InterimCastJobFunctions = {};
-
 local HandleMidcast = function(profile)
   local player = gData.GetPlayer();
-  if (gData.GetPlayer().MaxHP == 0) then return; end
+  if (gData.GetPlayer().MaxMP == 0) then return; end
   local action = gData.GetAction();
   local currentGear = gData.GetEquipment();
   local midDelay = GetMidDelay(profile, player, action);
   if (midDelay >= .3 and profile.ModeLookup.InterimMode[profile.Mode.InterimMode] ~= 'IgnoreInterim' and SpellTypes[action.Type][action.Name].IgnoreInterim ~= true) then
     profile.workingSet = {};
+    profile.totalSwapMP = 0;
     gFunc.SetMidDelay(midDelay);
     local set = GetInterimEquipSet(profile);
     if (set == 'InterruptionInterim') then
       for _, setString in ipairs(SpellPriorityTypes[set]) do
         if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-          BuildMaxMpSet(profile, setString, action, currentGear, true);
+          BuildMaxMpSet(profile, setString, action, currentGear, false);
         else
-          CombineSets(profile, setString, action, true);
+          CombineSets(profile, setString, action, false);
         end
       end
     else
       if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-        BuildMaxMpSet(profile, set, action, currentGear, true);
+        BuildMaxMpSet(profile, set, action, currentGear, false);
       else
-        CombineSets(profile, set, action, player, true);
+        CombineSets(profile, set, action, player, false);
       end
     end
     if (InterimCastJobFunctions[player.Main] ~= nil) then
@@ -1168,26 +1178,23 @@ local HandleMidcast = function(profile)
     end
   end
   profile.workingSet = {};
+  profile.totalSwapMP = 0;
   local spellPriorityType = GetEquipPriorityType(profile, action);
   for _, setString in ipairs(SpellPriorityTypes[spellPriorityType]) do
-    if (setString == 'UggPendant' and 51 <= GetVisibleMPThreshhold(profile, player, currentGear, action)) then
-      goto continue;
-    elseif (ConquestItems[setString] ~= nil and ConquestItems[setString] ~= profile.ModeLookup.ConquestMode[profile.Mode.ConquestMode]) then
-      goto continue;
-    elseif (setString == 'EleStaff' and profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
+    if (setString == 'EleStaff' and profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
       profile.workingSet['Main'] = ElementalStaffTable[action.Element];
       goto continue;
     elseif (setString == 'Instrument') then
       GetInstrument(profile, action);
       goto continue;
     elseif (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP' and profile.ModeLookup.SpellMode[profile.Mode.SpellMode] == 'SpellAccuracy' and SpellTypes[action.Type].SpellAccuracy ~= nil) then
-      CombineSets(profile, profile.Sets[setString]);
+      CombineSets(profile, profile.Sets[setString], action, false);
       goto continue;
     end
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
-      BuildMaxMpSet(profile, setString, action, player, currentGear);
+      BuildMaxMpSet(profile, setString, action, currentGear, false);
     else
-      CombineSets(profile, setString, action, player);
+      CombineSets(profile, setString, action, false);
     end
     ::continue::
   end
@@ -1218,6 +1225,7 @@ local HandleAbility = function(profile)
   local currentGear = gData.GetEquipment();
   profile.workingSet = {};
   profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
+  profile.totalSwapMP = 0;
   if (profile.Sets[action.Name] ~= nil) then
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
       BuildMaxMpSet(profile, action.Name, action, player, currentGear);
