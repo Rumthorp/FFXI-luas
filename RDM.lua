@@ -42,7 +42,7 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Club'
     },
-    Damage = {
+    DamageEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Nashira Turban',
         Neck = 'Peacock Amulet',
@@ -66,7 +66,7 @@ profile.Sets = {
             }
         }
     },
-    Accuracy = {
+    AccuracyEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
@@ -87,7 +87,7 @@ profile.Sets = {
             }
         }
     },
-    Evasion = {
+    EvasionEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Evasion Torque',
@@ -102,7 +102,7 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
     },
-    PDT = {
+    PDTEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Darksteel Cap +1',
         Neck = 'Evasion Torque',
@@ -117,7 +117,7 @@ profile.Sets = {
         Legs = 'Dst. Subligar +1',
         Feet = 'Dst. Leggings +1'
     },
-    DamageBalanced = {
+    DamageBalancedEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Duelist\'s Chapeau',
         Neck = 'Peacock Amulet',
@@ -141,7 +141,7 @@ profile.Sets = {
             }
         }
     },
-    EvasionBalanced = {
+    EvasionBalancedEngaged = {
         Ammo = 'Olibanum Sachet',
         Head = 'Duelist\'s Chapeau',
         Neck = 'Evasion Torque',
@@ -156,7 +156,7 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
     },
-    PDTBalanced = {
+    PDTBalancedEngaged = {
         Head = 'Duelist\'s Chapeau',
         Neck = 'Evasion Torque',
         Ear1 = 'Hollow Earring',
@@ -194,8 +194,8 @@ profile.Sets = {
         Legs = 'Zenith Slacks',             -- 50
         Feet = 'Wood M Ledelsens',          -- 30
     },
-    MaxEvasion = {
-        Head = 'Optical Hat',
+    EvasionIdle = {
+        Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
         Ear2 = 'Suppanomimi',
@@ -209,11 +209,11 @@ profile.Sets = {
         Feet = 'Hydra Gaiters',
         EquipOrder = {
             { Slot = 'Body', MPValue = 10 },
+            { Slot = 'Head', MPValue = .71 },
             { Slot = 'Neck', MPValue = .35 },
             { Slot = 'Back', MPValue = .33 },
             { Slot = 'Ear1', MPValue = .23 },
             { Slot = 'Legs', MPValue = .2 },
-            { Slot = 'Head', MPValue = .2 },
             { Slot = 'Ear2', MPValue = .2 },
             { Slot = 'Waist', MPValue = .17 },
             { Slot = 'Hands', MPValue = .12 },
@@ -222,7 +222,7 @@ profile.Sets = {
             { Slot = 'Ring1', MPValue = .04 },
         }
     },
-    MaxPDT = {
+    PDTIdle = {
         Head = 'Darksteel Cap +1',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -468,19 +468,11 @@ profile.Sets = {
     },
     Sneak = {
         Back = 'Skulker\'s Cape',
-        Feet = 'Dream Boots +1',
-        EquipOrder = {
-            { Slot = 'Back', MPValue = 1 },
-            { Slot = 'Feet', MPValue = 1 },
-        }
+        Feet = 'Dream Boots +1'
     },
     Invisible = {
         Hands = 'Dream Mittens +1',
-        Back = 'Skulker\'s Cape',
-        EquipOrder = {
-            { Slot = 'Hands', MPValue = 1 },
-            { Slot = 'Back', MPValue = 1 },
-        }
+        Back = 'Skulker\'s Cape'
     },
 };
 profile.Packer = {
@@ -491,10 +483,10 @@ profile.OnLoad = function()
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'Damage', 'Accuracy', 'Evasion', 'PDT', 'DamageBalanced', 'EvasionBalanced', 'PDTBalanced' }, 
+        { 'DamageEngaged', 'AccuracyEngaged', 'EvasionEngaged', 'PDTEngaged', 'DamageBalancedEngaged', 'EvasionBalancedEngaged', 'PDTBalancedEngaged' }, 
         { 'EarthStaff', 'SwordClub', 'DaggerClub', 'ClubSword', 'ClubDagger', 'ClubShield' }, 
         {  }, 
-        { 'MaxEvasion', 'MaxPDT' }, 
+        { 'EvasionIdle', 'PDTIdle' }, 
         {  },
         525,
         725

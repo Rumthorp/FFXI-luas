@@ -48,7 +48,12 @@ profile.Sets = {
         Back = 'Rainbow Cape',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Hydra Brais',
-        Feet = 'Wood M Ledelsens'
+        Feet = 'Wood M Ledelsens',
+        AltGear = {
+            Ring1 = {
+                { Condition = 'ShouldWearOpuntiaRing', Name = 'Opuntia Hoop' }
+            }
+        },
     },
     PhysicalDefense = {
         Head = 'Genie Tiara',
@@ -60,33 +65,27 @@ profile.Sets = {
         Ring1 = 'Coral Ring',
         Ring2 = 'Jelly Ring',
         Back = 'Cheviot Cape',
-        Waist = 'Forest Rope',
+        Waist = 'Druid\'s Rope',
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
+        AltGear = {
+            Ring1 = {
+                { Condition = 'ShouldWearOpuntiaRing', Name = 'Opuntia Hoop', MPValue = .05 }
+            }
+        },
         EquipOrder = {
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Neck', MPValue =  },
-            { Slot = 'Ear1', MPValue =  },
-            { Slot = 'Ear2', MPValue =  },
-            { Slot = 'Body', MPValue =  },
-            { Slot = 'Hands', MPValue =  },
-            { Slot = 'Ring1', MPValue =  },
-            { Slot = 'Ring2', MPValue =  },
-            { Slot = 'Back', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            Head = 'Genie Tiara',
-            Neck = 'Evasion Torque',
-            Ear1 = 'Novia Earring',
-            Ear2 = 'Suppanomimi',
-            Body = 'Igqira Weskit',
-            Hands = 'Igqira Manillas',
-            Ring1 = 'Coral Ring',
-            Ring2 = 'Jelly Ring',
-            Back = 'Cheviot Cape',
-            Waist = 'Forest Rope',
-            Legs = 'Hydra Brais',
-            Feet = 'Hydra Gaiters',
+            { Slot = 'Back', MPValue = .17 },
+            { Slot = 'Ring2', MPValue = .1 },
+            { Slot = 'Head', MPValue = .01 },
+            { Slot = 'Body', MPValue = .01 },
+            { Slot = 'Hands', MPValue = .01 },
+            { Slot = 'Waist', MPValue = 0 },
+            { Slot = 'Neck', MPValue = 0 },
+            { Slot = 'Ear1', MPValue = 0 },
+            { Slot = 'Ear2', MPValue = 0 },
+            { Slot = 'Ring1', MPValue = 0 },
+            { Slot = 'Legs', MPValue = 0 },
+            { Slot = 'Feet', MPValue = 0 }
         }
     },
     EvasionIdle = {
@@ -99,30 +98,69 @@ profile.Sets = {
         Ring1 = 'Emerald Ring',
         Ring2 = 'Emerald Ring',
         Back = 'Boxer\'s Mantle',
-        Waist = 'Forest Rope',
+        Waist = 'Druid\'s Rope',
         Legs = 'Hydra Brais',
-        Feet = 'Hydra Gaiters'
+        Feet = 'Hydra Gaiters',
+        AltGear = {
+            Ring1 = {
+                { Condition = 'ShouldWearOpuntiaRing', Name = 'Opuntia Hoop', MPValue = .05 }
+            }
+        },
+        EquipOrder = {
+            { Slot = 'Body', MPValue = .83 },
+            { Slot = 'Neck', MPValue = .35 },
+            { Slot = 'Back', MPValue = .33 },
+            { Slot = 'Ear1', MPValue = .23 },
+            { Slot = 'Legs', MPValue = .2 },
+            { Slot = 'Head', MPValue = .2 },
+            { Slot = 'Ear2', MPValue = .2 },
+            { Slot = 'Hands', MPValue = .12 },
+            { Slot = 'Feet', MPValue = .12 },
+            { Slot = 'Ring2', MPValue = .04 },
+            { Slot = 'Ring1', MPValue = .04 },
+            { Slot = 'Waist', MPValue = 0 }
     },
     EnfeeblingSkill = {
         Head = 'Genie Tiara',
         Neck = 'Enfeebling Torque',
         Body = 'Wizard\'s Coat',
-        Legs = 'Nashira Seraweels'
+        Legs = 'Nashira Seraweels',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     ElementalSkill = {
         Head = 'Sorcerer\'s Petas.',
         Body = 'Igqira Weskit',
         Hands = 'Wizard\'s Gloves',
-        Feet = 'Nashira Crackows'
+        Feet = 'Nashira Crackows',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     DarkSkill = {
         Body = 'Nashira Manteel',
         Hands = 'Sorcerer\'s Gloves',
-        Legs = 'Wizard\'s Tonban'
+        Legs = 'Wizard\'s Tonban',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     Precast = {
         Ear1 = 'Loquac. Earring',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     Recast = {
         Head = 'Nashira Turban',
@@ -131,7 +169,16 @@ profile.Sets = {
         Hands = 'Nashira Gages',
         Waist = 'Swift Belt',
         Legs = 'Nashira Seraweels',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     MagicAccuracy = {
         Head = 'Nashira Turban',
@@ -139,13 +186,38 @@ profile.Sets = {
         Hands = 'Nashira Gages',
         Ring2 = 'Tamas Ring',
         Legs = 'Nashira Seraweels',
-        Feet = 'Nashira Crackows'
+        Feet = 'Nashira Crackows',
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     MagicAttack = {
         Ear1 = 'Novio Earring',
         Ear2 = 'Moldavite Earring',
         Body = 'Igqira Weskit',
         Hands = 'Zenith Mitts'
+        AltGear = {
+            Ring1 = {
+                { Condition = '', Name = 'Sorcerer\'s Ring', MPValue =  }
+            },
+            Head = {
+                { Condition = '', Name = 'Republic Circlet', MPValue =  }
+            },
+            Neck = {
+                { Condition = '', Name = 'Uggalepih Pendant', MPValue =  }
+            }
+        },
+        EquipOrder = {
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  }
+        }
     },
     Int = {
         Main = 'Kirin\'s Pole',
@@ -161,7 +233,10 @@ profile.Sets = {
         Back = 'Rainbow Cape',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Errant Slops',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            
+        }
     },
     Mnd = {
         Main = 'Kirin\'s Pole',
@@ -176,51 +251,44 @@ profile.Sets = {
         Back = 'Rainbow Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Errant Slops',
-        Feet = 'Mahatma Pigaches'
+        Feet = 'Mahatma Pigaches',
+        EquipOrder = {
+            
+        }
     },
     Interruption = {
         Main = 'Eremite\'s Wand',
         Sub = 'Genbu\'s Shield',
         Head = 'Nashira Turban',
         Waist = 'Druid\'s Rope',
-        Feet = 'Sorcerer\'s Sabots'
+        Feet = 'Sorcerer\'s Sabots',
+        EquipOrder = {
+            
+        }
     },
     EnmityMinus = {
-        Ammo = 'Hedgehog Bomb',     -- 1
-        Head = 'Hydra Beret',       -- 8
-        Ear2 = 'Novia Earring',     -- 7
-        Body = 'Hydra Doublet',     -- 9
-        Hands = 'Nashira Gages',    -- 4
-        Ring2 = 'Tamas Ring',       -- 5
-        Back = 'Errant Cape',       -- 5
-        Waist = 'Penitent\'s Rope', -- 3
-        Legs = 'Hydra Brais',       -- 6
-        Feet = 'Hydra Gaiters'      -- 5  total: 53
+        Ammo = 'Hedgehog Bomb',
+        Head = 'Hydra Beret',
+        Ear2 = 'Novia Earring',
+        Body = 'Hydra Doublet',
+        Hands = 'Nashira Gages',
+        Ring2 = 'Tamas Ring',
+        Back = 'Errant Cape',
+        Waist = 'Penitent\'s Rope',
+        Legs = 'Hydra Brais',
+        Feet = 'Hydra Gaiters',
+        EquipOrder = {
+            
+        }
     },
     AccuracyPotencyBalanced = {
-        Ammo = 'Phtm. Tathlum',
-        Head = 'Sorcerer\'s Petas.',
-        Neck = 'Prudence Torque',
-        Ear1 = 'Novio Earring',
-        Ear2 = 'Moldavite Earring'
+
     },
     EnmityAccuracyBalanced = {
 
     },
-    BLMThreshholdRing = {
-        Ring1 = 'Sorcerer\'s Ring'
-    },
-    UggPendant = {
-        Neck = 'Uggalepih Pendant'
-    },
     OverlordsRing = {
         Ring1 = 'Overlord\'s Ring'
-    },
-    RepublicCirclet = {
-        Head = 'Republic Circlet'
-    },
-    OpuntiaHoop = {
-        Ring1 = 'Opuntia Hoop'
     },
     SacHP = {
         Head = 'Zenith Crown',
@@ -230,7 +298,10 @@ profile.Sets = {
         Ring2 = 'Serket Ring',
         Waist = 'Penitent\'s Rope',
         Legs = 'Zenith Slacks',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            
+        }
     },
     Sneak = {
         Back = 'Skulker\'s Cape',
