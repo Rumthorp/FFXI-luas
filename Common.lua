@@ -355,11 +355,6 @@ local WeaponSkills = {
 local RangedWeaponTypes = {
   ['Ziska\'s Crossbow'] = 'Crossbow'
 };
-local Ammo = {
-  ['BloodyBolt'] = { Name = 'Bloody Bolt', Type = 'Crossbow' },
-  ['SleepBolt'] = { Name = 'Sleep Bolt', Type = 'Crossbow' },
-  ['AcidBolt'] = { Name = 'Acid Bolt', Type = 'Crossbow' }
-};
 local AccuracySetLookup = {
   ['Healing Magic'] = 'HealingSkill',
   ['Enhancing Magic'] = 'EnhancingSkill',
@@ -585,9 +580,11 @@ local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponSt
     EnmityMode = { 'IgnoreEnmity', 'EnmityMinus', 'EnmityPlus', 'EnmityBalanced' },
     TPMode = { 'IgnoreTP', 'SaveTP' },
     MPMode = { 'IgnoreMaxMP', 'PreserveMaxMP' },
-    InterimMode = { 'InterruptionInterim', 'DefenseInterim', 'IgnoreInterim' },
+    InterimMode = { 'IgnoreInterim', 'InterruptionInterim', 'DefenseInterim' },
     InstrumentMode = { 'Wind', 'String' },
-    ConquestMode = { 'Inside', 'Outside', 'Disabled' }
+    ConquestMode = { 'Disabled', 'Inside', 'Outside' },
+    DefenseMode = { 'UseIdleStance', 'EvasionIdle', 'PDTIdle', 'MDTIdle' },
+    MagicBurstMode = { 'NoBurst', 'Burst' }
   };
   profile.SacHPCounter = 0;
   profile.RestMPThreshhold = RestMPThreshhold;
@@ -613,7 +610,7 @@ local SetDefaultStances = function(profile, EngagedStance, WeaponStance, RangedS
   profile.Stance.AmmoStance = AmmoStance;
 end
 
-local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode, MPMode, InterimMode, InstrumentMode, ConquestMode)
+local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode, MPMode, InterimMode, InstrumentMode, ConquestMode, DefenseMode, MagicBurstMode)
   profile.Mode = {};
   profile.Mode.SpellMode = SpellMode;
   profile.Mode.WSMode = WSMode;
@@ -623,6 +620,8 @@ local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode,
   profile.Mode.InterimMode = InterimMode;
   profile.Mode.InstrumentMode = InstrumentMode;
   profile.Mode.ConquestMode = ConquestMode;
+  profile.Mode.DefenseMode = DefenseMode;
+  profile.Mode.MagicBurstMode = MagicBurstMode;
 end
 
 local LoadDefaultKeybinds = function()
@@ -877,7 +876,7 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
     return;
   end
   local currentMissingMp = profile.workingCurrentMissingMp;
-  local totalSwapMP = profile.totalSwapMP;
+  local maxMPDif = profile.maxMPDif;
   local newSet = profile.workingSet;
   local slotSwaps = {};
   local conditions = {};
@@ -904,7 +903,6 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
   end
   table.sort(equipOrderCopy, function (item1, item2) return item1.MPValue > item2.MPValue end);
   for _, data in ipairs(equipOrderCopy) do
-    -- gFunc.Echo(255, totalSwapMP)
     local slot = data.Slot;
     local item = profile.Sets[setString][slot];
     if (
@@ -926,19 +924,20 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
       end
     end
     if (oldItemMp > newItemMp) then
-      if (currentMissingMp - (oldItemMp - newItemMp) >= 0) then
+      if ((currentMissingMp - (oldItemMp - newItemMp)) - maxMPDif >= 0) then
         newSet[slot] = item;
         currentMissingMp = currentMissingMp - (oldItemMp - newItemMp);
+        if (maxMPDif < oldItemMp - newItemMp) then maxMPDif = oldItemMp - newItemMp; end
       end
     else
       newSet[slot] = item;
       currentMissingMp = currentMissingMp + (newItemMp - oldItemMp);
-      totalSwapMP = newItemMp - oldItemMp;
+      if (maxMPDif < newItemMp - oldItemMp) then maxMPDif = newItemMp - oldItemMp; end
     end
     ::continue::
   end
   profile.workingCurrentMissingMp = currentMissingMp;
-  profile.totalSwapMP = totalSwapMP;
+  profile.maxMPDif = maxMPDif;
   profile.workingSet = newSet;
 end
 
@@ -978,12 +977,16 @@ local GetMidDelay = function(profile, player, action)
   local midDelay = profile.TrueCastSpeed - .3;
   return midDelay;
 end
-
+DefenseMode = { 'UseIdleStance', 'Evasion', 'PDT', 'MDT' },
 local GetInterimEquipSet = function(profile)  
   if (profile.ModeLookup.InterimMode[profile.Mode.InterimMode] == 'InterruptionInterim') then
     return 'InterruptionInterim';
   elseif (profile.ModeLookup.InterimMode[profile.Mode.InterimMode] == 'DefenseInterim') then
-    return profile.StanceLookup.IdleStance[profile.Stance.IdleStance];
+    if (profile.ModeLookup.DefenseMode[profile.Mode.DefenseMode] ~= 'UseIdleStance') then
+      return profile.ModeLookup.DefenseMode[profile.Mode.DefenseMode] .. 'Idle';
+    else
+      return profile.StanceLookup.IdleStance[profile.Stance.IdleStance];
+    end
   end
 end
 
@@ -1103,7 +1106,7 @@ local HandleDefault = function(profile)
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
       local currentGear = gData.GetEquipment();
       profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) - player.MP;
-      profile.totalSwapMP = 0;
+      profile.maxMPDif = 0;
       BuildMaxMpSet(profile, 'SacHP', action, currentGear, true);
     else
       CombineSets(profile, 'SacHP', nil, true);
@@ -1129,7 +1132,7 @@ local HandlePrecast = function(profile)
   if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
     local currentGear = gData.GetEquipment();
     profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
-    profile.totalSwapMP = 0;
+    profile.maxMPDif = 0;
     BuildMaxMpSet(profile, precastSetString, action, currentGear, true);
   else 
     CombineSets(profile, precastSetString, action, true);
@@ -1146,7 +1149,7 @@ local HandleMidcast = function(profile)
   local midDelay = GetMidDelay(profile, player, action);
   if (midDelay >= .3 and profile.ModeLookup.InterimMode[profile.Mode.InterimMode] ~= 'IgnoreInterim' and SpellTypes[action.Type][action.Name].IgnoreInterim ~= true) then
     profile.workingSet = {};
-    profile.totalSwapMP = 0;
+    profile.maxMPDif = 0;
     gFunc.SetMidDelay(midDelay);
     local set = GetInterimEquipSet(profile);
     if (set == 'InterruptionInterim') then
@@ -1178,7 +1181,7 @@ local HandleMidcast = function(profile)
     end
   end
   profile.workingSet = {};
-  profile.totalSwapMP = 0;
+  profile.maxMPDif = 0;
   local spellPriorityType = GetEquipPriorityType(profile, action);
   for _, setString in ipairs(SpellPriorityTypes[spellPriorityType]) do
     if (setString == 'EleStaff' and profile.ModeLookup.TPMode[profile.Mode.TPMode] ~= 'SaveTP') then 
@@ -1225,7 +1228,7 @@ local HandleAbility = function(profile)
   local currentGear = gData.GetEquipment();
   profile.workingSet = {};
   profile.workingCurrentMissingMp = ((100 / player.MPP) * player.MP) -  player.MP;
-  profile.totalSwapMP = 0;
+  profile.maxMPDif = 0;
   if (profile.Sets[action.Name] ~= nil) then
     if (profile.ModeLookup.MPMode[profile.Mode.MPMode] == 'PreserveMaxMP') then
       BuildMaxMpSet(profile, action.Name, action, player, currentGear);

@@ -11,9 +11,6 @@ profile.Sets = {
     EarthStaff = {
         Main = 'Terra\'s Staff',
     },
-    WindStaff = {
-        Main = 'Auster\'s Staff',
-    },
     Resting = {
         Main = 'Pluto\'s Staff',
         Head = 'Hydra Beret',
@@ -24,19 +21,19 @@ profile.Sets = {
         Feet = 'Hydra Gaiters'
     },
     MaxMP = {
-        Ammo = 'Hedgehog Bomb',
-        Head = 'Zenith Crown',
-        Neck = 'Uggalepih Pendant',
-        Ear1 = 'Loquac. Earring',
-        Ear2 = 'Astral Earring',
-        Body = 'Sorcerer\'s Coat',
-        Hands = 'Wood Gauntlets',
-        Ring1 = 'Vivian Ring',
-        Ring2 = 'Serket Ring',
-        Back = 'Errant Cape',
-        Waist = 'Forest Rope',
-        Legs = 'Zenith Slacks',
-        Feet = 'Rostrum Pumps'
+        Ammo = 'Hedgehog Bomb',             -- 30
+        Head = 'Zenith Crown',              -- 50
+        Neck = 'Uggalepih Pendant',         -- 20
+        Ear1 = 'Loquac. Earring',           -- 30
+        Ear2 = 'Astral Earring',            -- 25
+        Body = 'Sorcerer\'s Coat',          -- 12
+        Hands = 'Wood Gauntlets',           -- 55
+        Ring1 = 'Vivian Ring',              -- 50
+        Ring2 = 'Serket Ring',              -- 50
+        Back = 'Errant Cape',               -- 30
+        Waist = 'Forest Rope',              -- 60
+        Legs = 'Zenith Slacks',             -- 50
+        Feet = 'Rostrum Pumps'              -- 30
     },
     MPBalanced = {
         Ammo = 'Phtm. Tathlum',
@@ -65,9 +62,34 @@ profile.Sets = {
         Back = 'Cheviot Cape',
         Waist = 'Forest Rope',
         Legs = 'Hydra Brais',
-        Feet = 'Hydra Gaiters'
+        Feet = 'Hydra Gaiters',
+        EquipOrder = {
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Neck', MPValue =  },
+            { Slot = 'Ear1', MPValue =  },
+            { Slot = 'Ear2', MPValue =  },
+            { Slot = 'Body', MPValue =  },
+            { Slot = 'Hands', MPValue =  },
+            { Slot = 'Ring1', MPValue =  },
+            { Slot = 'Ring2', MPValue =  },
+            { Slot = 'Back', MPValue =  },
+            { Slot = '', MPValue =  },
+            { Slot = '', MPValue =  },
+            Head = 'Genie Tiara',
+            Neck = 'Evasion Torque',
+            Ear1 = 'Novia Earring',
+            Ear2 = 'Suppanomimi',
+            Body = 'Igqira Weskit',
+            Hands = 'Igqira Manillas',
+            Ring1 = 'Coral Ring',
+            Ring2 = 'Jelly Ring',
+            Back = 'Cheviot Cape',
+            Waist = 'Forest Rope',
+            Legs = 'Hydra Brais',
+            Feet = 'Hydra Gaiters',
+        }
     },
-    EvasionDefense = {
+    EvasionIdle = {
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -219,178 +241,6 @@ profile.Sets = {
         Back = 'Skulker\'s Cape'
     } 
 };
-profile.SetEquipOrder = {
-    MPBalanced = {
-        'Body',
-        'Ammo',
-        'Head',
-        'Neck',
-        'Ear1',
-        'Ear2',
-        'Hands',
-        'Ring1',
-        'Ring2',
-        'Back',
-        'Waist',
-        'Legs',
-        'Feet'
-    },
-    PhysicalDefense = {
-        'Head',
-        'Neck',
-        'Ear1',
-        'Ear2',
-        'Body',
-        'Hands',
-        'Ring1',
-        'Ring2',
-        'Back',
-        'Waist',
-        'Legs',
-        'Feet'
-    },
-    EvasionDefense = {
-        'Head',
-        'Neck',
-        'Ear1',
-        'Ear2',
-        'Body',
-        'Hands',
-        'Ring1',
-        'Ring2',
-        'Back',
-        'Waist',
-        'Legs',
-        'Feet'
-    },
-    EnfeeblingSkill = {
-        'Body',
-        'Head',
-        'Neck',
-        'Legs'
-    },
-    ElementalSkill = {
-        'Body',
-        'Hands',
-        'Head',
-        'Feet'
-    },
-    DarkSkill = {
-        'Legs',
-        'Hands',
-        'Body'
-    },
-    Precast = {
-        'Ear1',
-        'Feet'
-    },
-    Recast = {
-        'Waist',
-        'Body',
-        'Legs',
-        'Head',
-        'Feet',
-        'Ear1',
-        'Hands'
-    },
-    MagicAccuracy = {
-        'Ring2',
-        'Head',
-        'Body',
-        'Legs',
-        'Hands',
-        'Feet'
-    },
-    MagicAttack = {
-        'Hands',
-        'Ear1',
-        'Body',
-        'Ear2'
-    },
-    Int = {
-        'Main',
-        'Ring2',
-        'Body',
-        'Legs',
-        'Neck',
-        'Head',
-        'Hands',
-        'Ring1',
-        'Back',
-        'Waist',
-        'Feet',
-        'Ammo',
-        'Ear2',
-        'Ear1'
-    },
-    Mnd = {
-        'Main',
-        'Ring2',
-        'Head',
-        'Body',
-        'Legs',
-        'Feet',
-        'Neck',
-        'Hands',
-        'Waist',
-        'Ring1',
-        'Back',
-        'Ear2',
-        'Ear1'
-    },
-    Interruption = {
-        'Main',
-        'Sub',
-        'Feet',
-        'Head',
-        'Waist'
-    },
-    EnmityMinus = {
-        'Body',
-        'Head',
-        'Legs',
-        'Ring2',
-        'Back',
-        'Feet',
-        'Hands',
-        'Waist',
-        'Ammo'
-    },
-    BLMThreshholdRing = {
-        'Ring1'
-    },
-    UggPendant = {
-        'Neck'
-    },
-    OverlordsRing = {
-        'Ring1'
-    },
-    RepublicCirclet = {
-        'Head'
-    },
-    OpuntiaHoop = {
-        'Ring1'
-    },
-    Sneak = {
-        'Back',
-        'Feet'
-    },
-    Invisible = {
-        'Hands',
-        'Back'
-    },
-    SacHP = {
-        'Hands',
-        'Head',
-        'Ring2',
-        'Ring1',
-        'Legs',
-        'Feet',
-        'Ear2',
-        'Waist'
-    }
-};
-profile.EngagedSetsWithDusk = T{};
 
 profile.Packer = {
 };
@@ -401,9 +251,9 @@ profile.OnLoad = function()
     Common.CreateDefaultData(
         profile, 
         {  }, 
-        { 'EarthStaff', 'WindStaff' }, 
+        { 'EarthStaff', }, 
         {  }, 
-        { 'MPBalanced', 'PhysicalDefense', 'EvasionDefense' }, 
+        { 'MPBalanced', 'EvasionIdle', 'PDTIdle' }, 
         {  },
         675,
         825
@@ -411,10 +261,18 @@ profile.OnLoad = function()
     Common.SetDefaultStances(profile, 0, 1, 0, 1, 0);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 3, 1, 3);
     Common.LoadDefaultKeybinds();
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F8 /lac fwd Mode DefenseMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F8 /lac fwd Mode DefenseMode Minus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F9 /lac fwd Mode MagicBurstMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F9 /lac fwd Mode MagicBurstMode Minus');
 end
 
 profile.OnUnload = function()
     Common.UnloadDefaultKeybinds();
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F8 /lac fwd Mode DefenseMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F8 /lac fwd Mode DefenseMode Minus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F9 /lac fwd Mode MagicBurstMode Plus');
+    AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +^F9 /lac fwd Mode MagicBurstMode Minus');
 end
 
 profile.HandleCommand = function(args)

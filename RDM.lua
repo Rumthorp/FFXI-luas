@@ -36,9 +36,6 @@ profile.Sets = {
     EarthStaff = {
         Main = 'Terra\'s Staff',
     },
-    WindStaff = {
-        Main = 'Auster\'s Staff'
-    },
     WarpStaff = {
         Main = 'Treat Staff II'
     },
@@ -484,23 +481,8 @@ profile.Sets = {
             { Slot = 'Hands', MPValue = 1 },
             { Slot = 'Back', MPValue = 1 },
         }
-    }
+    },
 };
-profile.MaxMPItems = {
-    ['Hedgehog Bomb'] = true,
-    ['Duelist\'s Chapeau'] = true,
-    ['Uggalepih Pendant'] = true,
-    ['Loquac. Earring'] = true,
-    ['Astral Earring'] = true,
-    ['Hydra Doublet'] = true,
-    ['Wood Gauntlets'] = true,
-    ['Vivian Ring'] = true,
-    ['Serket Ring'] = true,
-    ['Errant Cape'] = true,
-    ['Forest Rope'] = true,
-    ['Zenith Slacks'] = true,
-    ['Wood M Ledelsens'] = true
-  }
 profile.Packer = {
 };
 
@@ -510,7 +492,7 @@ profile.OnLoad = function()
     Common.CreateDefaultData(
         profile, 
         { 'Damage', 'Accuracy', 'Evasion', 'PDT', 'DamageBalanced', 'EvasionBalanced', 'PDTBalanced' }, 
-        { 'EarthStaff', 'WindStaff', 'SwordClub', 'DaggerClub', 'ClubSword', 'ClubDagger', 'ClubShield' }, 
+        { 'EarthStaff', 'SwordClub', 'DaggerClub', 'ClubSword', 'ClubDagger', 'ClubShield' }, 
         {  }, 
         { 'MaxEvasion', 'MaxPDT' }, 
         {  },
