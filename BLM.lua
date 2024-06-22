@@ -85,7 +85,7 @@ profile.Sets = {
             { Slot = 'Ear2', MPValue = 0 },
             { Slot = 'Ring1', MPValue = 0 },
             { Slot = 'Legs', MPValue = 0 },
-            { Slot = 'Feet', MPValue = 0 }
+            { Slot = 'Feet', MPValue = 0 },
         }
     },
     EvasionIdle = {
@@ -118,7 +118,7 @@ profile.Sets = {
             { Slot = 'Feet', MPValue = .12 },
             { Slot = 'Ring2', MPValue = .04 },
             { Slot = 'Ring1', MPValue = .04 },
-            { Slot = 'Waist', MPValue = 0 }
+            { Slot = 'Waist', MPValue = 0 },
     },
     EnfeeblingSkill = {
         Head = 'Genie Tiara',
@@ -126,10 +126,10 @@ profile.Sets = {
         Body = 'Wizard\'s Coat',
         Legs = 'Nashira Seraweels',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Body', MPValue = 10 },
+            { Slot = 'Neck', MPValue = .35 },
+            { Slot = 'Head', MPValue = .22 },
+            { Slot = 'Legs', MPValue = .16 },
         }
     },
     ElementalSkill = {
@@ -138,10 +138,10 @@ profile.Sets = {
         Hands = 'Wizard\'s Gloves',
         Feet = 'Nashira Crackows',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Body', MPValue = .42 },
+            { Slot = 'Hands', MPValue = .39 },
+            { Slot = 'Head', MPValue = .37 },
+            { Slot = 'Feet', MPValue = .23 },
         }
     },
     DarkSkill = {
@@ -149,17 +149,17 @@ profile.Sets = {
         Hands = 'Sorcerer\'s Gloves',
         Legs = 'Wizard\'s Tonban',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Body', MPValue = .83 },
+            { Slot = 'Legs', MPValue = .42 },
+            { Slot = 'Hands', MPValue = .38 },
         }
     },
     Precast = {
         Ear1 = 'Loquac. Earring',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Feet', MPValue = 3 },
+            { Slot = 'Ear1', MPValue = 2 },
         }
     },
     Recast = {
@@ -171,13 +171,13 @@ profile.Sets = {
         Legs = 'Nashira Seraweels',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Ear1', MPValue = 1 },
+            { Slot = 'Feet', MPValue = 1 },
+            { Slot = 'Body', MPValue = .25 },
+            { Slot = 'Waist', MPValue = .07 },
+            { Slot = 'Hands', MPValue = .06 },
+            { Slot = 'Head', MPValue = .04 },
+            { Slot = 'Legs', MPValue = .04 },
         }
     },
     MagicAccuracy = {
@@ -188,12 +188,12 @@ profile.Sets = {
         Legs = 'Nashira Seraweels',
         Feet = 'Nashira Crackows',
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Body', MPValue = .42 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Head', MPValue = .1 },
+            { Slot = 'Feet', MPValue = .07 },
+            { Slot = 'Hands', MPValue = .06 },
+            { Slot = 'Legs', MPValue = .06 },
         }
     },
     MagicAttack = {
@@ -202,21 +202,21 @@ profile.Sets = {
         Body = 'Igqira Weskit',
         Hands = 'Zenith Mitts'
         AltGear = {
-            Ring1 = {
-                { Condition = '', Name = 'Sorcerer\'s Ring', MPValue =  }
-            },
             Head = {
-                { Condition = '', Name = 'Republic Circlet', MPValue =  }
+                { Condition = 'IsInsideControl', Name = 'Republic Circlet', MPValue =  }
+            },
+            Ring1 = {
+                { Condition = 'ShouldWear50ClassRing', Name = 'Sorcerer\'s Ring', MPValue =  }
             },
             Neck = {
-                { Condition = '', Name = 'Uggalepih Pendant', MPValue =  }
+                { Condition = 'ShouldWearUggPendant', Name = 'Uggalepih Pendant', MPValue = 8 }
             }
         },
         EquipOrder = {
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  },
-            { Slot = '', MPValue =  }
+            { Slot = 'Hands', MPValue = 5 },
+            { Slot = 'Ear1', MPValue = .23 },
+            { Slot = 'Ear2', MPValue = .2 },
+            { Slot = 'Body', MPValue = .5 },
         }
     },
     Int = {
@@ -235,7 +235,20 @@ profile.Sets = {
         Legs = 'Errant Slops',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            
+            { Slot = 'Main', MPValue =  },
+            { Slot = 'Ammo', MPValue =  },
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Neck', MPValue =  },
+            { Slot = 'Ear1', MPValue =  },
+            { Slot = 'Ear2', MPValue =  },
+            { Slot = 'Body', MPValue =  },
+            { Slot = 'Hands', MPValue =  },
+            { Slot = 'Ring1', MPValue =  },
+            { Slot = 'Ring2', MPValue =  },
+            { Slot = 'Back', MPValue =  },
+            { Slot = 'Waist', MPValue =  },
+            { Slot = 'Legs', MPValue =  },
+            { Slot = 'Feet', MPValue =  }
         }
     },
     Mnd = {
@@ -253,7 +266,19 @@ profile.Sets = {
         Legs = 'Errant Slops',
         Feet = 'Mahatma Pigaches',
         EquipOrder = {
-            
+            { Slot = 'Main', MPValue =  },
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Neck', MPValue =  },
+            { Slot = 'Ear1', MPValue =  },
+            { Slot = 'Ear2', MPValue =  },
+            { Slot = 'Body', MPValue =  },
+            { Slot = 'Hands', MPValue =  },
+            { Slot = 'Ring1', MPValue =  },
+            { Slot = 'Ring2', MPValue =  },
+            { Slot = 'Back', MPValue =  },
+            { Slot = 'Waist', MPValue =  },
+            { Slot = 'Legs', MPValue =  },
+            { Slot = 'Feet', MPValue =  }
         }
     },
     Interruption = {
@@ -263,7 +288,11 @@ profile.Sets = {
         Waist = 'Druid\'s Rope',
         Feet = 'Sorcerer\'s Sabots',
         EquipOrder = {
-            
+            { Slot = 'Main', MPValue =  },
+            { Slot = 'Sub', MPValue =  },
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Waist', MPValue =  },
+            { Slot = 'Feet', MPValue =  }
         }
     },
     EnmityMinus = {
@@ -278,7 +307,16 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
         EquipOrder = {
-            
+            { Slot = 'Ammo', MPValue =  },
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Ear2', MPValue =  },
+            { Slot = 'Body', MPValue =  },
+            { Slot = 'Hands', MPValue =  },
+            { Slot = 'Ring2', MPValue =  },
+            { Slot = 'Back', MPValue =  },
+            { Slot = 'Waist', MPValue =  },
+            { Slot = 'Legs', MPValue =  },
+            { Slot = 'Feet', MPValue =  }
         }
     },
     AccuracyPotencyBalanced = {
@@ -288,7 +326,10 @@ profile.Sets = {
 
     },
     OverlordsRing = {
-        Ring1 = 'Overlord\'s Ring'
+        Ring1 = 'Overlord\'s Ring',
+        EquipOrder = {
+            { Slot = 'Ring1', MPValue =  }
+        }
     },
     SacHP = {
         Head = 'Zenith Crown',
@@ -300,7 +341,14 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            
+            { Slot = 'Head', MPValue =  },
+            { Slot = 'Ear2', MPValue =  },
+            { Slot = 'Hands', MPValue =  },
+            { Slot = 'Ring1', MPValue =  },
+            { Slot = 'Ring2', MPValue =  },
+            { Slot = 'Waist', MPValue =  },
+            { Slot = 'Legs', MPValue =  },
+            { Slot = 'Feet', MPValue =  }
         }
     },
     Sneak = {

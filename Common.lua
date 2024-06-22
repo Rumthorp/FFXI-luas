@@ -352,9 +352,6 @@ local WeaponSkills = {
   ['Swift Blade'] = { Default = 'SwiftBladePotency' },
   ['Savage Blade'] = { Default = 'SavageBladePotency' }
 };
-local RangedWeaponTypes = {
-  ['Ziska\'s Crossbow'] = 'Crossbow'
-};
 local AccuracySetLookup = {
   ['Healing Magic'] = 'HealingSkill',
   ['Enhancing Magic'] = 'EnhancingSkill',

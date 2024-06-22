@@ -294,7 +294,7 @@ profile.Sets = {
             { Slot = 'Legs', MPValue = 0 },
         }
     },
-    FastCast = {
+    Precast = {
         Head = 'Warlock\'s Chapeau',
         Ear1 = 'Loquac. Earring',
         Body = 'Duelist\'s Tabard',
