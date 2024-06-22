@@ -6,7 +6,7 @@ profile.Sets = {
         Body = 'Cleric\'s Bliaut',
         Hands = 'Nashira Gages',
         Legs = 'Cleric\'s Pantaln.',
-        Feet = 'Duelist\'s Boots',
+        Feet = 'Cleric\'s Duckbills',
     },
     Staff = {
         Main = 'Terra\'s Staff',
@@ -18,6 +18,7 @@ profile.Sets = {
     ClubClub = {
         Main = 'Purgatory Mace',
         Sub = 'Octave Club',
+        DualWield = true
     },
     WarpStaff = {
         Main = 'Treat Staff II'
@@ -25,7 +26,77 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Cudgel'
     },
+    HasteEngaged = {
+        Ammo = 'Olibanum Sachet',
+        Head = 'Nashira Turban',
+        Neck = 'Prudence Torque',
+        Ear1 = 'Coral Earring',
+        Ear2 = 'Hollow Earring',
+        Body = 'Nashira Manteel',
+        Hands = 'Blessed Mitts',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Cheviot Cape',
+        Waist = 'Swift Belt',
+        Legs = 'Blessed Trousers',
+        Feet = 'Blessed Pumps',
+        AltGear = {
+            Ear2 = {
+                { Condition = 'IsDualWielding', Name = 'Stealth Earring' }
+            },
+        }
+    },
+    AccuracyEngaged = {
+        Ammo = 'Olibanum Sachet',
+        Head = 'Optical Hat',
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Hollow Earring',
+        Ear2 = 'Coral Earring',
+        Body = 'Hydra Doublet',
+        Hands = 'Hydra Gloves',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Cheviot Cape',
+        Waist = 'Swift Belt',
+        Legs = 'Hydra Brais',
+        Feet = 'Hydra Gaiters',
+        AltGear = {
+            Ear2 = {
+                { Condition = 'IsDualWielding', Name = 'Stealth Earring' }
+            },
+        }
+    },
+    EvasionEngaged = {
+        Ammo = 'Olibanum Sachet ',
+        Head = 'Optical Hat',
+        Neck = 'Evasion Torque',
+        Ear1 = 'Novia Earring',
+        Ear2 = 'Suppanomimi',
+        Body = 'Hydra Doublet',
+        Hands = 'Hydra Gloves',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Boxer\'s Mantle',
+        Waist = '',
+        Legs = '',
+        Feet = ''
+    },
     MaxMP = {
+        Ammo = 'Hedgehog Bomb',             -- 30
+        Head = 'Zenith Crown',              -- 50
+        Neck = 'Uggalepih Pendant',         -- 20
+        Ear1 = 'Loquac. Earring',           -- 30
+        Ear2 = 'Astral Earring',            -- 25
+        Body = 'Noble\'s Tunic',            -- 17
+        Hands = 'Wood Gauntlets',           -- 55
+        Ring1 = 'Vivian Ring',              -- 50
+        Ring2 = 'Serket Ring',              -- 50
+        Back = 'Errant Cape',               -- 30
+        Waist = 'Forest Rope',              -- 60
+        Legs = 'Zenith Slacks',             -- 50
+        Feet = 'Rostrum Pumps'              -- 30
+    },
+    EvasionIdle = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Zenith Crown',
         Neck = 'Uggalepih Pendant',
@@ -40,22 +111,7 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Rostrum Pumps'
     },
-    Defense = {
-        Ammo = 'Hedgehog Bomb',
-        Head = 'Zenith Crown',
-        Neck = 'Uggalepih Pendant',
-        Ear1 = 'Loquac. Earring',
-        Ear2 = 'Astral Earring',
-        Body = 'Noble\'s Tunic',
-        Hands = 'Wood Gauntlets',
-        Ring1 = 'Vivian Ring',
-        Ring2 = 'Serket Ring',
-        Back = 'Errant Cape',
-        Waist = 'Forest Rope',
-        Legs = 'Zenith Slacks',
-        Feet = 'Rostrum Pumps'
-    },
-    IdleDefense = {
+    PDTIdle = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
@@ -183,133 +239,6 @@ profile.Sets = {
         Back = 'Skulker\'s Cape'
     }
 };
-profile.SetEquipOrder = {
-    ClubShield = {
-        'Main',
-        'Sub'
-    },
-    ClubClub = {
-        'Main',
-        'Sub'
-    },
-    Staff = {
-        'Main'
-    },
-    IdleDefense = {
-        'Body',
-        'Back',
-        'Neck',
-        'Ear1',
-        'Head',
-        'Legs',
-        'Waist',
-        'Feet',
-        'Hands',
-        'Ear2',
-        'Ring1',
-        'Ring2'
-    },
-    Interruption = {
-        'Main',
-        'Sub',
-        'Feet',
-        'Head',
-        'Waist',
-    },
-    EnmityMinus = {
-        'Head',
-        'Ear2',
-        'Body',
-        'Hands',
-        'Back',
-        'Legs',
-        'Feet'
-    },
-    HealingSkill = {
-        'Legs',
-        'Hands'
-    },
-    EnhancingSkill = {
-        'Hands',
-        'Legs'
-    },
-    EnfeeblingSkill = {
-        'Hands',
-        'Body'
-    },
-    WHMBar = {
-        'Legs',
-        'Body'
-    },
-    DivineSkill = {
-        'Legs'
-    },
-    MagicAttack = {
-        'Ear1',
-        'Ear2',
-        'Hands',
-    },
-    RegenPotency = {
-        'Main',
-        'Body'
-    },
-    CurePrecast = {
-        'Feet',
-        'Main'
-    },
-    Mnd = {
-        'Waist',
-        'Neck',
-        'Body',
-        'Legs',
-        'Feet',
-        'Head',
-        'Hands',
-        'Ring1',
-        'Ring2',
-        'Back',
-        'Ear1',
-        'Ear2'
-    },
-    Int = {
-        'Body',
-        'Neck',
-        'Legs',
-        'Hands',
-        'Back',
-        'Head',
-        'Feet',
-        'Ear1',
-        'Ear2',
-        'Waist',
-        'Ring1',
-        'Ring2'
-    },
-    Recast = {
-        'Hands',
-        'Waist',
-        'Body',
-        'Legs',
-        'Head',
-        'Feet',
-        'Ear1'
-    },
-    UggPendant = {
-        Neck
-    },
-    RepublicCirclet = {
-        Head
-    },
-    Sneak = {
-        'Back',
-        'Feet'
-    },
-    Invisible = {
-        'Hands',
-        'Back'
-    }
-};
-profile.EngagedSetsWithDusk = T{};
 profile.Packer = {
 };
 
@@ -318,10 +247,10 @@ profile.OnLoad = function()
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'MaxMP', 'Haste', 'Accuracy', 'Defense' }, 
-        { 'Staff', 'ClubShield', 'ClubClub', 'WarpStaff', 'WarpClub' }, 
+        { 'HasteEngaged', 'AccuracyEngaged', 'EvasionEngaged' }, 
+        { 'Staff', 'ClubShield', 'ClubClub' }, 
         {  }, 
-        { 'MaxMP', 'IdleDefense', 'MagicDefense' }, 
+        { 'EvasionIdle', 'PDTIdle' }, 
         {  },
         675,
         825

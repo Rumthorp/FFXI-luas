@@ -119,6 +119,7 @@ profile.Sets = {
             { Slot = 'Ring2', MPValue = .04 },
             { Slot = 'Ring1', MPValue = .04 },
             { Slot = 'Waist', MPValue = 0 },
+        }
     },
     EnfeeblingSkill = {
         Head = 'Genie Tiara',
@@ -200,23 +201,29 @@ profile.Sets = {
         Ear1 = 'Novio Earring',
         Ear2 = 'Moldavite Earring',
         Body = 'Igqira Weskit',
-        Hands = 'Zenith Mitts'
+        Hands = 'Zenith Mitts',
         AltGear = {
             Head = {
-                { Condition = 'IsInsideControl', Name = 'Republic Circlet', MPValue =  }
-            },
-            Ring1 = {
-                { Condition = 'ShouldWear50ClassRing', Name = 'Sorcerer\'s Ring', MPValue =  }
+                { Condition = 'IsInsideControl', Name = 'Republic Circlet', MPValue = .1 }
             },
             Neck = {
                 { Condition = 'ShouldWearUggPendant', Name = 'Uggalepih Pendant', MPValue = 8 }
+            },
+            Hands = {
+                { Condition = 'IsBursting', Name = 'Sorcerer\'s Gloves', MPValue = .19 }
+            },
+            Ring1 = {
+                { Condition = 'ShouldWear50ClassRing', Name = 'Sorcerer\'s Ring', MPValue = .2 }
+            },
+            Legs = {
+                { Condition = 'DayMatchesElement', Name = 'Sorcerer\'s Tonban', MPValue = .1 }
             }
         },
         EquipOrder = {
             { Slot = 'Hands', MPValue = 5 },
+            { Slot = 'Body', MPValue = .5 },
             { Slot = 'Ear1', MPValue = .23 },
             { Slot = 'Ear2', MPValue = .2 },
-            { Slot = 'Body', MPValue = .5 },
         }
     },
     Int = {
@@ -235,20 +242,20 @@ profile.Sets = {
         Legs = 'Errant Slops',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            { Slot = 'Main', MPValue =  },
-            { Slot = 'Ammo', MPValue =  },
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Neck', MPValue =  },
-            { Slot = 'Ear1', MPValue =  },
-            { Slot = 'Ear2', MPValue =  },
-            { Slot = 'Body', MPValue =  },
-            { Slot = 'Hands', MPValue =  },
-            { Slot = 'Ring1', MPValue =  },
-            { Slot = 'Ring2', MPValue =  },
-            { Slot = 'Back', MPValue =  },
-            { Slot = 'Waist', MPValue =  },
-            { Slot = 'Legs', MPValue =  },
-            { Slot = 'Feet', MPValue =  }
+            { Slot = 'Main', MPValue = 10 },
+            { Slot = 'Feet', MPValue = 3 },
+            { Slot = 'Body', MPValue = .83 },
+            { Slot = 'Neck', MPValue = .25 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Hands', MPValue = .17 },
+            { Slot = 'Head', MPValue = .16 },
+            { Slot = 'Back', MPValue = .14 },
+            { Slot = 'Legs', MPValue = .14 },
+            { Slot = 'Ammo', MPValue = .1 },
+            { Slot = 'Ear2', MPValue = .1 },
+            { Slot = 'Ring1', MPValue = .1 },
+            { Slot = 'Waist', MPValue = .1 },
+            { Slot = 'Ear1', MPValue = .08 },
         }
     },
     Mnd = {
@@ -266,19 +273,19 @@ profile.Sets = {
         Legs = 'Errant Slops',
         Feet = 'Mahatma Pigaches',
         EquipOrder = {
-            { Slot = 'Main', MPValue =  },
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Neck', MPValue =  },
-            { Slot = 'Ear1', MPValue =  },
-            { Slot = 'Ear2', MPValue =  },
-            { Slot = 'Body', MPValue =  },
-            { Slot = 'Hands', MPValue =  },
-            { Slot = 'Ring1', MPValue =  },
-            { Slot = 'Ring2', MPValue =  },
-            { Slot = 'Back', MPValue =  },
-            { Slot = 'Waist', MPValue =  },
-            { Slot = 'Legs', MPValue =  },
-            { Slot = 'Feet', MPValue =  }
+            { Slot = 'Main', MPValue = 10 },
+            { Slot = 'Head', MPValue = 3 },
+            { Slot = 'Feet', MPValue = 1.2 },
+            { Slot = 'Body', MPValue = .83 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Neck', MPValue = .25 },
+            { Slot = 'Back', MPValue = .14 },
+            { Slot = 'Legs', MPValue = .14 },
+            { Slot = 'Hands', MPValue = .12 },
+            { Slot = 'Ring1', MPValue = .08 },
+            { Slot = 'Waist', MPValue = .08 },
+            { Slot = 'Ear2', MPValue = .05 },
+            { Slot = 'Ear1', MPValue = .04 },
         }
     },
     Interruption = {
@@ -286,13 +293,13 @@ profile.Sets = {
         Sub = 'Genbu\'s Shield',
         Head = 'Nashira Turban',
         Waist = 'Druid\'s Rope',
-        Feet = 'Sorcerer\'s Sabots',
+        Feet = 'Wizard\'s Sabots',
         EquipOrder = {
-            { Slot = 'Main', MPValue =  },
-            { Slot = 'Sub', MPValue =  },
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Waist', MPValue =  },
-            { Slot = 'Feet', MPValue =  }
+            { Slot = 'Main', MPValue = 25 },
+            { Slot = 'Feet', MPValue = 2 },
+            { Slot = 'Head', MPValue = .2 },
+            { Slot = 'Waist', MPValue = .17 },
+            { Slot = 'Sub', MPValue = 0 },
         }
     },
     EnmityMinus = {
@@ -307,16 +314,16 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
         EquipOrder = {
-            { Slot = 'Ammo', MPValue =  },
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Ear2', MPValue =  },
-            { Slot = 'Body', MPValue =  },
-            { Slot = 'Hands', MPValue =  },
-            { Slot = 'Ring2', MPValue =  },
-            { Slot = 'Back', MPValue =  },
-            { Slot = 'Waist', MPValue =  },
-            { Slot = 'Legs', MPValue =  },
-            { Slot = 'Feet', MPValue =  }
+            { Slot = 'Body', MPValue = 9 },
+            { Slot = 'Back', MPValue = 5 },
+            { Slot = 'Ammo', MPValue = 1 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Ear2', MPValue = .23 },
+            { Slot = 'Feet', MPValue = .17 },
+            { Slot = 'Head', MPValue = .16 },
+            { Slot = 'Legs', MPValue = .12 },
+            { Slot = 'Hands', MPValue = .1 },
+            { Slot = 'Waist', MPValue = .05 },
         }
     },
     AccuracyPotencyBalanced = {
@@ -328,7 +335,7 @@ profile.Sets = {
     OverlordsRing = {
         Ring1 = 'Overlord\'s Ring',
         EquipOrder = {
-            { Slot = 'Ring1', MPValue =  }
+            { Slot = 'Ring1', MPValue = .04 }
         }
     },
     SacHP = {
@@ -341,24 +348,32 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
-            { Slot = 'Head', MPValue =  },
-            { Slot = 'Ear2', MPValue =  },
-            { Slot = 'Hands', MPValue =  },
-            { Slot = 'Ring1', MPValue =  },
-            { Slot = 'Ring2', MPValue =  },
-            { Slot = 'Waist', MPValue =  },
-            { Slot = 'Legs', MPValue =  },
-            { Slot = 'Feet', MPValue =  }
+            { Slot = 'Head', MPValue = 50 },
+            { Slot = 'Hands', MPValue = 50 },
+            { Slot = 'Ring1', MPValue = 50 },
+            { Slot = 'Ring2', MPValue = 50 },
+            { Slot = 'Legs', MPValue = 50 },
+            { Slot = 'Feet', MPValue = 30 },
+            { Slot = 'Ear2', MPValue = 25 },
+            { Slot = 'Waist', MPValue = .33 },
         }
     },
     Sneak = {
         Back = 'Skulker\'s Cape',
-        Feet = 'Dream Boots +1'
+        Feet = 'Dream Boots +1',
+        EquipOrder = {
+            { Slot = 'Back', MPValue = 2 },
+            { Slot = 'Feet', MPValue = 1 },
+        }
     },
     Invisible = {
         Hands = 'Dream Mittens +1',
-        Back = 'Skulker\'s Cape'
-    } 
+        Back = 'Skulker\'s Cape',
+        EquipOrder = {
+            { Slot = 'Back', MPValue = 2 },
+            { Hands = 'Feet', MPValue = 1 },
+        }
+    }
 };
 
 profile.Packer = {
@@ -378,7 +393,7 @@ profile.OnLoad = function()
         825
     );
     Common.SetDefaultStances(profile, 0, 1, 0, 1, 0);
-    Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 3, 1, 3);
+    Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F8 /lac fwd Mode DefenseMode Plus');
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F8 /lac fwd Mode DefenseMode Minus');

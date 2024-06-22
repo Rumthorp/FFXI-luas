@@ -39,7 +39,7 @@ local SpellPriorityTypes = {
   ['SongRecastSkill'] = { 'Instrument', 'SongRecast', 'Recast', 'MatchSkill' },
   ['SongRecast'] = { 'Instrument', 'SongRecast', 'Recast' }
 };
-local GenericBlmNuke = { Default = 'BlackMagicNukePotency', SpellAccuracy = 'BlackMagicNukeAccuracy', SpellBalanced = 'BlackMagicNukeBalanced', EnmityBalanced = 'BlackMagicNukeEnmityAccuracyBalanced' };
+local GenericBlmNuke = { Default = 'BlackMagicNukePotency', SpellAccuracy = 'BlackMagicNukeAccuracy', SpellBalanced = 'BlackMagicNukeBalanced', EnmityBalanced = 'BlackMagicNukeEnmityAccuracyBalanced', Burst = true };
 local SpellTypes = {
   ['White Magic'] = {
     ['Cure'] = { Default = 'CurePotency', EnmityMinus = 'CureEnmityMinus', EnmityPlus = 'CureEnmityPlus', EnmityBalanced = 'CureEnmityBalanced' },
@@ -64,12 +64,12 @@ local SpellTypes = {
     ['Stona'] = { Default = 'Recast' },
     ['Viruna'] = { Default = 'Recast' },
     ['Cursna'] = { Default = 'Recast' },
-    ['Holy'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy' },
-    ['Banish'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 2000 },
-    ['Banish II'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 2500 },
-    ['Banish III'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 3000 },
-    ['Banishga'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy' },
-    ['Banishga II'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy' },
+    ['Holy'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', Burst = true },
+    ['Banish'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 2000, Burst = true },
+    ['Banish II'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 2500, Burst = true },
+    ['Banish III'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', CastTime = 3000, Burst = true },
+    ['Banishga'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', Burst = true },
+    ['Banishga II'] = { Default = 'WhiteMagicNukePotency', SpellAccuracy = 'WhiteMagicNukeAccuracy', Burst = true },
     ['Flash'] = { Default = 'FlashRecast', EnmityPlus = 'FlashEnmity' },
     ['Protect'] = { Default = 'Recast', IgnoreInterim = true },
     ['Protect II'] = { Default = 'Recast', IgnoreInterim = true },
@@ -219,8 +219,8 @@ local SpellTypes = {
     ['Gravity'] = { Default = 'BlackMagicCCPotency', SpellAccuracy = 'BlackMagicCCAccuracy' },
     ['Bio'] = { Default = 'DarkSkillPotency', SpellAccuracy = 'DarkSkillAccuracy' },
     ['Bio II'] = { Default = 'DarkSkillPotency', SpellAccuracy = 'DarkSkillAccuracy' },
-    ['Drain'] = { Default = 'DrainAspirPotency', SpellAccuracy = 'DrainAspirAccuracy' },
-    ['Aspir'] = { Default = 'DrainAspirPotency', SpellAccuracy = 'DrainAspirAccuracy' },
+    ['Drain'] = { Default = 'DrainAspirPotency', SpellAccuracy = 'DrainAspirAccuracy', Burst = true },
+    ['Aspir'] = { Default = 'DrainAspirPotency', SpellAccuracy = 'DrainAspirAccuracy', Burst = true },
     ['Stun'] = { Default = 'DarkSkillPotency', SpellAccuracy = 'DarkSkillAccuracy' },
     ['Tractor'] = { Default = 'Recast' }
   },
@@ -375,6 +375,7 @@ local CurePrecastTypesLookup = T{
   'Curaga IV'
 };
 local MPGear = {
+  ['Kirin\'s Pole'] = { MP = 20, Convert = false, Slot = 'Main' },
   ['Republic Circlet'] = { MP = 5, Convert = false, Slot = 'Head' },
   ['Sorcerer\'s Petasos'] = { MP = 23, Convert = false, Slot = 'Head' },
   ['Sorcerer\'s Coat'] = { MP = 12, Convert = false, Slot = 'Body' },
@@ -607,7 +608,7 @@ local SetDefaultStances = function(profile, EngagedStance, WeaponStance, RangedS
   profile.Stance.AmmoStance = AmmoStance;
 end
 
-local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode, MPMode, InterimMode, InstrumentMode, ConquestMode, DefenseMode, MagicBurstMode)
+local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode, MPMode, InterimMode, ConquestMode, DefenseMode, MagicBurstMode, InstrumentMode)
   profile.Mode = {};
   profile.Mode.SpellMode = SpellMode;
   profile.Mode.WSMode = WSMode;
@@ -615,10 +616,10 @@ local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode,
   profile.Mode.TPMode = TPMode;
   profile.Mode.MPMode = MPMode;
   profile.Mode.InterimMode = InterimMode;
-  profile.Mode.InstrumentMode = InstrumentMode;
   profile.Mode.ConquestMode = ConquestMode;
   profile.Mode.DefenseMode = DefenseMode;
   profile.Mode.MagicBurstMode = MagicBurstMode;
+  profile.Mode.InstrumentMode = InstrumentMode;
 end
 
 local LoadDefaultKeybinds = function()
@@ -812,11 +813,43 @@ ItemConditions.ShouldWearOpuntiaRing = function(profile)
   end
   return false;
 end
+ItemConditions.IsBursting = function(profile)
+  local action = gData.GetAction();
+  if (profile.ModeLookup.MagicBurstMode[profile.Mode.MagicBurstMode] == 'Burst' and SpellTypes[action.Type][action.Name].Burst == true) then
+    return true;
+  else
+    return false;
+  end
+end
 ItemConditions.ShouldWearUggPendant = function(profile)
   local player = gData.GetPlayer();
   local currentGear = gData.GetEquipment();
   local action = gData.GetAction();
-  if (51 <= GetVisibleMPThreshhold(profile, player, currentGear, action)) then
+  if (GetVisibleMPThreshhold(profile, player, currentGear, action) <= 51) then
+    return true;
+  else
+    return false;
+  end
+end
+ItemConditions.DayMatchesElement = function(profile)
+  local action = gData.GetAction();
+  local environment = gData.GetEnvironment();
+  if (action.Element ~= nil and action.Element == environment.DayElement) then
+    return true;
+  else
+    return false;
+  end
+end
+ItemConditions.ShouldWear50ClassRing = function(profile)
+  local player = gData.GetPlayer();
+  if (player.TP < 1000) then
+    return true;
+  else
+    return false;
+  end
+end
+ItemConditions.IsInsideControl = function(profile)
+  if (profile.ModeLookup.ConquestMode[profile.Mode.ConquestMode] == 'Inside') then
     return true;
   else
     return false;
@@ -828,7 +861,7 @@ local CombineSets = function(profile, setString, action, overwrite, override)
     setString = HandleMatchSkill(action);
   end
   if (profile.Sets[setString] == nil) then return; end
-  local slotSwaps = {};
+  local setCopy = ShallowCopySet(profile.Sets[setString]);
   local conditions = {};
   if (profile.Sets[setString].AltGear ~= nil) then
     for slot, dataArray in pairs(profile.Sets[setString].AltGear) do
@@ -840,25 +873,22 @@ local CombineSets = function(profile, setString, action, overwrite, override)
           doSwap = true;
         end
         if (doSwap == true) then
-          slotSwaps[slot] = data.Name;
+          setCopy[slot] = data.Name;
           conditions[data.Condition] = true;
           break;
         end
       end
     end
   end
-  for slot, item in pairs(profile.Sets[setString]) do
+  
+  for slot, item in pairs(setCopy) do
     if (
       (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub') and override ~= true) 
       or ValidSlots[slot] == nil 
       or (profile.workingSet[slot] ~= nil and overwrite == false)) then 
         goto continue; 
     end
-    if (slotSwaps[slot] ~= nil) then
-      profile.workingSet[slot] = slotSwaps[slot];
-    else
-      profile.workingSet[slot] = item;
-    end
+    profile.workingSet[slot] = item;
     ::continue::
   end
 end
@@ -901,14 +931,20 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
   table.sort(equipOrderCopy, function (item1, item2) return item1.MPValue > item2.MPValue end);
   for _, data in ipairs(equipOrderCopy) do
     local slot = data.Slot;
-    local item = profile.Sets[setString][slot];
     if (
-      (slotSwaps[slot] ~= nil and slotSwaps[slot].MPValue ~= data.MPValue)
-      or (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub'))
+      (profile.ModeLookup.TPMode[profile.Mode.TPMode] == 'SaveTP' and (slot == 'Main' or slot == 'Sub'))
       or (profile.workingSet[slot] ~= nil and overwrite == false)
       or ValidSlots[slot] == nil
     ) then 
       goto continue; 
+    end
+    local item;
+    if (data.Name ~= nil) then
+      item = data.Name;
+    elseif(slotSwaps[data.Slot] ~= nil) then
+      goto continue;
+    else
+      item = profile.Sets[setString][slot];
     end
     local newItemMp = 0;
     local oldItemMp = 0;
@@ -924,7 +960,7 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
       if ((currentMissingMp - (oldItemMp - newItemMp)) - maxMPDif >= 0) then
         newSet[slot] = item;
         currentMissingMp = currentMissingMp - (oldItemMp - newItemMp);
-        if (maxMPDif < oldItemMp - newItemMp) then maxMPDif = oldItemMp - newItemMp; end
+        -- if (maxMPDif < oldItemMp - newItemMp) then maxMPDif = oldItemMp - newItemMp; end
       end
     else
       newSet[slot] = item;
@@ -974,7 +1010,7 @@ local GetMidDelay = function(profile, player, action)
   local midDelay = profile.TrueCastSpeed - .3;
   return midDelay;
 end
-DefenseMode = { 'UseIdleStance', 'Evasion', 'PDT', 'MDT' },
+DefenseMode = { 'UseIdleStance', 'Evasion', 'PDT', 'MDT' };
 local GetInterimEquipSet = function(profile)  
   if (profile.ModeLookup.InterimMode[profile.Mode.InterimMode] == 'InterruptionInterim') then
     return 'InterruptionInterim';
