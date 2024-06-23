@@ -468,11 +468,19 @@ profile.Sets = {
     },
     Sneak = {
         Back = 'Skulker\'s Cape',
-        Feet = 'Dream Boots +1'
+        Feet = 'Dream Boots +1',
+        EquipOrder = {
+            { Slot = 'Back', MPValue = 2 },
+            { Slot = 'Feet', MPValue = 1 },
+        }
     },
     Invisible = {
         Hands = 'Dream Mittens +1',
-        Back = 'Skulker\'s Cape'
+        Back = 'Skulker\'s Cape',
+        EquipOrder = {
+            { Slot = 'Back', MPValue = 2 },
+            { Hands = 'Feet', MPValue = 1 },
+        }
     },
 };
 profile.Packer = {

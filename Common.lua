@@ -397,7 +397,7 @@ local MPGear = {
   ['Wood M Ledelsens'] = { MP = 30, Convert = false, Slot = 'Feet' },
   ['Forest Rope'] = { MP = 60, Convert = false, Slot = 'Waist' },
   ['Rostrum Pumps'] = { MP = 30, Convert = false, Slot = 'Feet' },
-  ['Blessed Bliaut'] = { MP = 40, Convert = false, MPPercent = 7, Slot = 'Body' }, --mp is zero, temp value
+  ['Blessed Bliaut'] = { MP = 40, Convert = false, MPPercent = 7, Slot = 'Body' },
   ['Blessed Mitts'] = { MP = 15, Convert = false, Slot = 'Hands' },
   ['Blessed Trousers'] = { MP = 25, Convert = false, Slot = 'Legs' },
   ['Blessed Pumps'] = { MP = 17, Convert = false, Slot = 'Feet' },

@@ -55,7 +55,8 @@ profile.Sets = {
             }
         },
     },
-    PhysicalDefense = {
+    PDTIdle = {
+        Ammo = 'Hedgehog Bomb',
         Head = 'Genie Tiara',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -86,9 +87,11 @@ profile.Sets = {
             { Slot = 'Ring1', MPValue = 0 },
             { Slot = 'Legs', MPValue = 0 },
             { Slot = 'Feet', MPValue = 0 },
+            { Slot = 'Ammo', MPValue = 0 },
         }
     },
     EvasionIdle = {
+        Ammo = 'Hedgehog Bomb',
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
