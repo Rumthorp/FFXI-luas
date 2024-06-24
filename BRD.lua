@@ -43,20 +43,20 @@ profile.Sets = {
         Main = 'Warp Cudgel'
     },
     MaxMP = {
-        Head = 'Zenith Crown',
-        Neck = 'Uggalepih Pendant',
-        Ear1 = 'Loquac. Earring',
-        Ear2 = 'Astral Earring',
-        Body = 'Hydra Doublet',
-        Hands = 'Wood Gauntlets',
-        Ring1 = 'Vivian Ring',
-        Ring2 = 'Serket Ring',
-        Back = 'Errant Cape',
-        Waist = 'Forest Rope',
-        Legs = 'Bard\'s Cannions',
-        Feet = 'Rostrum Pumps'
+        Head = 'Zenith Crown',              -- 50
+        Neck = 'Uggalepih Pendant',         -- 20
+        Ear1 = 'Loquac. Earring',           -- 30
+        Ear2 = 'Astral Earring',            -- 25
+        Body = 'Hydra Doublet',             -- 40
+        Hands = 'Wood Gauntlets',           -- 55
+        Ring1 = 'Vivian Ring',              -- 50
+        Ring2 = 'Serket Ring',              -- 50
+        Back = 'Errant Cape',               -- 30
+        Waist = 'Forest Rope',              -- 60
+        Legs = 'Bard\'s Cannions',          -- 42
+        Feet = 'Rostrum Pumps'              -- 30
     },
-    Damage = {
+    HasteEngaged = {
         Range = 'Angel Lyre',
         Head = 'Patroclus\'s Helm',
         Neck = 'Peacock Amulet',
@@ -71,7 +71,7 @@ profile.Sets = {
         Legs = 'Byakko\'s Haidate',
         Feet = 'Hydra Gaiters'
     },
-    Accuracy = {
+    AccuracyEngaged = {
         Range = 'Angel Lyre',
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
@@ -86,7 +86,7 @@ profile.Sets = {
         Legs = 'Byakko\'s Haidate',
         Feet = 'Hydra Gaiters'
     },
-    DefenseEvasion = {
+    EvasionIdle = {
         Range = 'Cornette +2',
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
@@ -101,7 +101,7 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
     },
-    DefensePhysical = {
+    PDTIdle = {
         Range = 'Cornette +2',
         Head = 'Darksteel Cap +1',
         Neck = 'Evasion Torque',
@@ -236,145 +236,17 @@ profile.Sets = {
         Feet = 'Bounding Boots',
     }
 };
-profile.SetEquipOrder = {
-    DefenseEvasion = {
-        'Range',
-        'Body',
-        'Ear1',
-        'Neck',
-        'Ear2',
-        'Back',
-        'Legs',
-        'Head',
-        'Waist',
-        'Hands',
-        'Feet',
-        'Ring1',
-        'Ring2'
-    },
-    DefensePhysical = {
-        'Range',
-        'Back',
-        'Ring1',
-        'Body',
-        'Legs',
-        'Head',
-        'Hands',
-        'Feet',
-        'Waist',
-        'Neck',
-        'Ear1',
-        'Ear2',
-        'Ring2',
-    },
-    WindSkill = {
-        'Ear2',
-        'Hands',
-        'Head'
-    },
-    StringSkill = {
-        'Ear2',
-        'Hands',
-        'Head',
-        'Body',
-        'Feet'
-    },
-    BardSongPreCast = {
-        'Ring1',
-        'Ear1',
-        'Feet',
-        'Back',
-        'Ring2',
-        'Head',
-        'Hands',
-        'Legs',
-        'Body',
-        'Neck'
-    },
-    Precast = {
-        'Ear1',
-        'Feet'
-    },
-    SongRecast = {
-        'Hands'
-    },
-    Recast = {
-        'Legs',
-        'Waist',
-        'Hands',
-        'Head',
-        'Feet',
-        'Ear1',
-    },
-    SongAccuracy = {
-        'Ear2',
-        'Ring1',
-        'Hands',
-        'Head',
-        'Body',
-        'Back',
-        'Neck',
-        'Ring2',
-        'Legs',
-        'Waist',
-        'Feet'
-    },
-    Sneak = {
-        'Feet'
-    },
-    Invisible = {
-        'Hands'
-    },
-    Mnd = {
-        'Head',
-        'Neck',
-        'Body',
-        'Ring1',
-        'Hands',
-        'Back',
-        'Ring2',
-        'Waist',
-        'Legs',
-        'Feet',
-        'Ear2',
-        'Ear1'
-    },
-    EnmityMinus = {
-        'Body',
-        'Ring1',
-        'Back',
-        'Ear2',
-        'Hands',
-        'Legs',
-        'Feet',
-        'Waist',
-        'Head'
-    },
-    SacHP = {
-        'Hands',
-        'Waist',
-        'Body',
-        'Ear2',
-        'Head',
-        'Ring1',
-        'Ring2',
-        'Legs',
-        'Feet'
-    }
-};
-profile.EngagedSetsWithDusk = T{
-    'Damage'
-};
+profile.Packer = {};
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'Damage', 'Accuracy', 'DefenseEvasion', 'DefensePhysical' }, 
+        { 'HasteEngaged', 'AccuracyEngaged' }, 
         { 'TerrasStaff', 'DaggerShield', 'SwordShield', 'DaggerClub', 'SwordClub', 'DaggerSword', 'SwordDagger' }, 
         {  }, 
-        { 'DefenseEvasion', 'DefensePhysical' }, 
+        { 'EvasionIdle', 'PDTIdle' }, 
         {  },
         100,
         400

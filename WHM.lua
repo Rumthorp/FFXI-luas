@@ -379,10 +379,30 @@ profile.Sets = {
         Neck = 'Prudence Torque'
     },
     TrueStrikePotency = {
-
+        Ammo = 'Olibanum Sachet',
+        Head = 'Voyager Sallet',
+        Neck = 'Spike Necklace',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Coral Earring',
+        Body = 'Hydra Doublet',
+        Hands = 'Healer\'s Mitts',
+        Ring1 = 'Ruby Ring',
+        Ring2 = 'Ruby Ring'
     },
     JudgmentPotency = {
-
+        Ammo = 'Olibanum Sachet',
+        Head = 'Voyager Sallet',
+        Neck = 'Spike Necklace',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Coral Earring',
+        Body = 'Blessed Bliaut',
+        Hands = 'Healer\'s Mitts',
+        Ring1 = 'Ruby Ring',
+        Ring2 = 'Ruby Ring',
+        Back = 'Rainbow Cape',
+        Waist = 'Cleric\'s Belt',
+        Legs = 'Blessed Trousers',
+        Feet = 'Mahatma Pigaches'
     },
     HexaStrikePotency = {
         Ammo = 'Olibanum Sachet',
@@ -400,11 +420,22 @@ profile.Sets = {
         Feet = 'Mahatma Pigaches'
     },
     BlackHaloPotency = {
-
+        Ammo = 'Olibanum Sachet',
+        Head = 'Voyager Sallet',
+        Neck = 'Spike Necklace',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Coral Earring',
+        Body = 'Blessed Bliaut',
+        Hands = 'Healer\'s Mitts',
+        Ring1 = 'Ruby Ring',
+        Ring2 = 'Ruby Ring',
+        Back = 'Rainbow Cape',
+        Waist = 'Cleric\'s Belt',
+        Legs = 'Blessed Trousers',
+        Feet = 'Mahatma Pigaches'
     }
 };
-profile.Packer = {
-};
+profile.Packer = {};
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;

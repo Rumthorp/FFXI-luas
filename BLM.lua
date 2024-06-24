@@ -378,9 +378,7 @@ profile.Sets = {
         }
     }
 };
-
-profile.Packer = {
-};
+profile.Packer = {};
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
