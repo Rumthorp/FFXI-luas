@@ -42,26 +42,12 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Cudgel'
     },
-    MaxMP = {
-        Head = 'Zenith Crown',              -- 50
-        Neck = 'Uggalepih Pendant',         -- 20
-        Ear1 = 'Loquac. Earring',           -- 30
-        Ear2 = 'Astral Earring',            -- 25
-        Body = 'Hydra Doublet',             -- 40
-        Hands = 'Wood Gauntlets',           -- 55
-        Ring1 = 'Vivian Ring',              -- 50
-        Ring2 = 'Serket Ring',              -- 50
-        Back = 'Errant Cape',               -- 30
-        Waist = 'Forest Rope',              -- 60
-        Legs = 'Bard\'s Cannions',          -- 42
-        Feet = 'Rostrum Pumps'              -- 30
-    },
     HasteEngaged = {
         Range = 'Angel Lyre',
         Head = 'Patroclus\'s Helm',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Stealth Earring',
+        Ear1 = 'Hollow Earring',
+        Ear2 = 'Brutal Earring',
         Body = 'Bard\'s Jstcorps',
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
@@ -69,7 +55,18 @@ profile.Sets = {
         Back = 'Amemet Mantle',
         Waist = 'Swift Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Hydra Gaiters'
+        Feet = 'Hydra Gaiters',
+        AltGear = {
+            Ear1 = {
+                { Condition = 'IsDualWielding', Name = 'Stealth Earring' }
+            },
+            Ear2 = {
+                { Condition = 'IsUsingOClub', Name = 'Coral Earring' }
+            },
+            Hands = {
+                { Condition = 'IsMoving', Name = 'Hydra Gloves' }
+            }
+        }
     },
     AccuracyEngaged = {
         Range = 'Angel Lyre',
@@ -93,7 +90,7 @@ profile.Sets = {
         Ear1 = 'Novia Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Hydra Doublet',
-        Hands = 'Raven Bracers',
+        Hands = 'Hydra Gloves',
         Ring1 = 'Emerald Ring',
         Ring2 = 'Emerald Ring',
         Back = 'Boxer\'s Mantle',
@@ -124,17 +121,45 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters'
     },
+    MaxMP = {
+        Head = 'Zenith Crown',              -- 50
+        Neck = 'Uggalepih Pendant',         -- 20
+        Ear1 = 'Loquac. Earring',           -- 30
+        Ear2 = 'Astral Earring',            -- 25
+        Body = 'Hydra Doublet',             -- 40
+        Hands = 'Wood Gauntlets',           -- 55
+        Ring1 = 'Vivian Ring',              -- 50
+        Ring2 = 'Serket Ring',              -- 50
+        Back = 'Errant Cape',               -- 30
+        Waist = 'Forest Rope',              -- 60
+        Legs = 'Bard\'s Cannions',          -- 42
+        Feet = 'Rostrum Pumps'              -- 30
+    },
     WindSkill = {
         Head = 'Bard\'s Roundlet',
         Ear2 = 'Musical Earring',
-        Hands = 'Choral Cuffs'
+        Hands = 'Choral Cuffs',
+        Legs = 'Choral Cannions'
+        EquipOrder = {
+            { Slot = 'Ear2', MPValue = .2 },
+            { Slot = 'Head', MPValue = .1 },
+            { Slot = 'Hands', MPValue = .1 },
+            { Slot = 'Legs', MPValue = .07 },
+        }
     },
     StringSkill = {
         Head = 'Bard\'s Roundlet',
         Ear2 = 'Musical Earring',
         Body = 'Choral Jstcorps',
         Hands = 'Choral Cuffs',
-        Feet = 'Bard\'s Slippers'
+        Feet = 'Bard\'s Slippers',
+        EquipOrder = {
+            { Slot = 'Head', MPValue = .1 },
+            { Slot = 'Ear2', MPValue = .2 },
+            { Slot = 'Body', MPValue = .08 },
+            { Slot = 'Hands', MPValue = .1 },
+            { Slot = 'Feet', MPValue = .1 },
+        }
     },
     BardSongPreCast = {
         Head = 'Genbu\'s Kabuto',
@@ -147,13 +172,32 @@ profile.Sets = {
         Back = 'Gigant Mantle',
         Legs = 'Dusk Trousers',
         Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = 'Feet', MPValue = 3 },
+            { Slot = 'Ear1', MPValue = 2 },
+            { Slot = 'Ring1', MPValue = .5 },
+            { Slot = 'Back', MPValue = 0 },
+            { Slot = 'Ring2', MPValue = 0 },
+            { Slot = 'Head', MPValue = 0 },
+            { Slot = 'Hands', MPValue = 0 },
+            { Slot = 'Body', MPValue = 0 },
+            { Slot = 'Legs', MPValue = 0 },
+            { Slot = 'Neck', MPValue = 0 },
+        }
     },
     Precast = {
         Ear1 = 'Loquac. Earring',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = 'Feet', MPValue = 3 },
+            { Slot = 'Ear1', MPValue = 2 },
+        }
     },
     SongRecast = {
         Hands = 'Sheikh Gages',
+        EquipOrder = {
+            { Slot = 'Hands', MPValue = 4 },
+        }
     },
     Recast = {
         Head = 'Patroclus\'s Helm',
@@ -161,7 +205,15 @@ profile.Sets = {
         Hands = 'Dusk Gloves',
         Waist = 'Swift Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = 'Feet', MPValue = 2 },
+            { Slot = 'Ear1', MPValue = 1 },
+            { Slot = 'Legs', MPValue = .12 },
+            { Slot = 'Hands', MPValue = .09 },
+            { Slot = 'Waist', MPValue = .7 },
+            { Slot = 'Head', MPValue = .04 },
+        }
     },
     SongAccuracy = {
         Head = 'Bard\'s Roundlet',
@@ -169,18 +221,37 @@ profile.Sets = {
         Ear2 = 'Musical Earring',
         Body = 'Kirin\'s Osode',
         Hands = 'Choral Cuffs',
-        Ring1 = 'Tamas Ring',
-        Ring2 = 'Angel\'s Ring',
+        Ring1 = 'Angel\'s Ring',
+        Ring2 = 'Tamas Ring',
         Back = 'Jester\'s Cape +1',
         Waist = 'Corsette +1',
         Legs = 'Errant Slops',
-        Feet = 'Dance Shoes'
+        Feet = 'Dance Shoes',
+        EquipOrder = {
+            { Slot = 'Head', MPValue = .1 },
+            { Slot = 'Neck', MPValue = .8 },
+            { Slot = 'Ear2', MPValue = .2 },
+            { Slot = 'Body', MPValue = .5 },
+            { Slot = 'Hands', MPValue = .9 },
+            { Slot = 'Ring1', MPValue = .4 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Back', MPValue = .17 },
+            { Slot = 'Waist', MPValue = .05 },
+            { Slot = 'Legs', MPValue = .14 },
+            { Slot = 'Feet', MPValue = .05 },
+        }
     },
     Sneak = {
-        Feet = 'Dream Boots +1'
+        Feet = 'Dream Boots +1',
+        EquipOrder = {
+            { Slot = 'Feet', MPValue = 1 },
+        }
     },
     Invisible = {
-        Hands = 'Dream Mittens +1'
+        Hands = 'Dream Mittens +1',
+        EquipOrder = {
+            { Slot = 'Hands', MPValue = 1 },
+        }
     },
     Mnd = {
         Head = 'Zenith Crown',
@@ -189,26 +260,48 @@ profile.Sets = {
         Ear2 = 'Geist Earring',
         Body = 'Errant Hpl.',
         Hands = 'Devotee\'s Mitts',
-        Ring1 = 'Tamas Ring',
-        Ring2 = 'Sapphire Ring',
+        Ring1 = 'Sapphire Ring',
+        Ring2 = 'Tamas Ring',
         Back = 'Rainbow Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Errant Slops',
-        Feet = 'Mahatma Pigaches'
+        Feet = 'Mahatma Pigaches',
+        EquipOrder = {
+            { Slot = 'Head', MPValue = 3 },
+            { Slot = 'Feet', MPValue = 1.2 },
+            { Slot = 'Neck', MPValue = .25 },
+            { Slot = 'Body', MPValue = .25 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Back', MPValue = .14 },
+            { Slot = 'Legs', MPValue = .14 },
+            { Slot = 'Hands', MPValue = .1 },
+            { Slot = 'Ring1', MPValue = .08 },
+            { Slot = 'Waist', MPValue = .08 },
+            { Slot = 'Ear2', MPValue = .05 },
+            { Slot = 'Ear1', MPValue = .04 },
+        }
     },
     EnmityMinus = {
-        Head = 'Patroclus\'s Helm',
+        Head = 'Hydra Beret',
         Ear2 = 'Novia Earring',
         Body = 'Hydra Doublet',
-        Hands = 'Raven Bracers',
-        Ring1 = 'Tamas Ring',
+        Hands = 'Hydra Gloves',
+        Ring2 = 'Tamas Ring',
         Back = 'Errant Cape',
         Waist = 'Penitent\'s Rope',
-        Legs = 'Raven Hose',
-        Feet = 'Raven Gaiters'
-    },
-    DuskMovement = {
-        Hands = 'Raven Bracers'
+        Legs = 'Hydra Brais',
+        Feet = 'Hydra Gaiters',
+        EquipOrder = {
+            { Slot = 'Body', MPValue = 9 },
+            { Slot = 'Back', MPValue = 5 },
+            { Slot = 'Ear2', MPValue = .28 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Feet', MPValue = .17 },
+            { Slot = 'Head', MPValue = .16 },
+            { Slot = 'Legs', MPValue = .12 },
+            { Slot = 'Hands', MPValue = .09 },
+            { Slot = 'Waist', MPValue = .05 },
+        }
     },
     SacHP = {
         Head = 'Zenith Crown',
@@ -219,7 +312,18 @@ profile.Sets = {
         Ring2 = 'Serket Ring',
         Waist = 'Scouter\'s Rope',
         Legs = 'Zenith Slacks',
-        Feet = 'Rostrum Pumps'
+        Feet = 'Rostrum Pumps',
+        EquipOrder = {
+            { Slot = 'Head', MPValue = 50 },
+            { Slot = 'Hands', MPValue = 50 },
+            { Slot = 'Ring1', MPValue = 50 },
+            { Slot = 'Ring2', MPValue = 50 },
+            { Slot = 'Legs', MPValue = 50 },
+            { Slot = 'Feet', MPValue = 30 },
+            { Slot = 'Ear2', MPValue = 25 },
+            { Slot = 'Body', MPValue = .28 },
+            { Slot = 'Waist', MPValue = .67 },
+        }
     },
     EviscerationPotency = {
         Head = 'Voyager Sallet',
@@ -252,8 +356,7 @@ profile.OnLoad = function()
         400
     );
     Common.SetDefaultStances(profile, 1, 1, 0, 1, 0);
-    Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 3, 1, 3);
-    profile.Mode.InstrumentMode = 1,
+    Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F9 /lac fwd Mode InstrumentMode Plus');
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind +^F9 /lac fwd Mode InstrumentMode Minus');
@@ -296,7 +399,6 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
-    local action = gData.GetAction();
     Common.HandleWeaponskill(profile)
 end
 
