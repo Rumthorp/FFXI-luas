@@ -13,15 +13,16 @@ profile.Sets = {
     DaggerClub = {
         Main = 'X\'s Knife',
         Sub = 'Octave Club',
+        DualWield = true
     },
     DaggerDagger = {
         Main = 'X\'s Knife',
         Sub = 'Blau Dolch',
+        DualWield = true
     },
     DaggerShield = {
         Main = 'X\'s Knife',
-        Sub = 'Tatami Shield',
-        Ear2 = 'Suppanomimi'
+        Sub = 'Tatami Shield'
     },
     Unarmed = {
         Main = 'Destroyers'
@@ -31,10 +32,12 @@ profile.Sets = {
         Sub = 'Tatami Shield'
     },
     Crossbow = {
-        Range = 'Ziska\'s Crossbow'
+        Range = 'Ziska\'s Crossbow',
+        WeaponType = 'Crossbow'
     },
     Boomerang = {
-        Range = 'Ungur Boomerang'
+        Range = 'Ungur Boomerang',
+        WeaponType = 'Throwing'
     },
     WarpStaff = {
         Main = 'Treat Staff II'
@@ -42,7 +45,7 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Club'
     },
-    Damage = {
+    HasteEngaged = {
         Head = 'Homam Zucchetto',
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring',
@@ -56,7 +59,7 @@ profile.Sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
-    Accuracy = {
+    AccuracyEngaged = {
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
         Ear1 = 'Suppanomimi',
@@ -70,7 +73,7 @@ profile.Sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
-    Evasion = {
+    EvasionEngaged = {
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -84,21 +87,7 @@ profile.Sets = {
         Legs = 'Raven Hose',
         Feet = 'Dance Shoes'
     },
-    DuskMovement = {
-        Hands = 'Homam Manopolas',
-    },
-    Movement = {
-        Feet = 'Trotter Boots'
-    },
-    SacHP = {
-        Head = 'Emperor Hairpin',
-        Ear2 = 'Astral Earring',
-        Body = 'Blue Cotehardie',
-        Ring1 = 'Vivian Ring',
-        Ring2 = 'Serket Ring',
-        Waist = 'Scouter\'s Rope',
-    },
-    IdleEvasion = {
+    EvasionIdle = {
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -111,6 +100,14 @@ profile.Sets = {
         Waist = 'Scouter\'s Rope',
         Legs = 'Raven Hose',
         Feet = 'Dance Shoes',
+    },
+    SacHP = {
+        Head = 'Emperor Hairpin',
+        Ear2 = 'Astral Earring',
+        Body = 'Blue Cotehardie',
+        Ring1 = 'Vivian Ring',
+        Ring2 = 'Serket Ring',
+        Waist = 'Scouter\'s Rope',
     },
     EnmityMinus = {
         Head = 'Patroclus\'s Helm',
@@ -298,9 +295,6 @@ profile.Sets = {
         Legs = 'Dusk Trousers',
         Feet = 'Homam Gamieras'
     }
-};
-profile.EngagedSetsWithDusk = T{
-    'Damage'
 };
 profile.Sets['EnergyStealPotency'] = profile.Sets['EnergyDrainPotency'];
 profile.Packer = {

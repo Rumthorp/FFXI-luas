@@ -139,7 +139,7 @@ profile.Sets = {
         Head = 'Bard\'s Roundlet',
         Ear2 = 'Musical Earring',
         Hands = 'Choral Cuffs',
-        Legs = 'Choral Cannions'
+        Legs = 'Choral Cannions',
         EquipOrder = {
             { Slot = 'Ear2', MPValue = .2 },
             { Slot = 'Head', MPValue = .1 },
