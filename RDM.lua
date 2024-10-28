@@ -42,7 +42,7 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Club'
     },
-    DamageEngaged = {
+    Damage = {
         Ammo = 'Olibanum Sachet',
         Head = 'Nashira Turban',
         Neck = 'Peacock Amulet',
@@ -66,7 +66,7 @@ profile.Sets = {
             }
         }
     },
-    AccuracyEngaged = {
+    Accuracy = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
@@ -87,7 +87,7 @@ profile.Sets = {
             }
         }
     },
-    EvasionEngaged = {
+    Evasion = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Evasion Torque',
@@ -102,7 +102,7 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
     },
-    PDTEngaged = {
+    PDT = {
         Ammo = 'Olibanum Sachet',
         Head = 'Darksteel Cap +1',
         Neck = 'Evasion Torque',
@@ -117,7 +117,7 @@ profile.Sets = {
         Legs = 'Dst. Subligar +1',
         Feet = 'Dst. Leggings +1'
     },
-    DamageBalancedEngaged = {
+    DamageBalanced = {
         Ammo = 'Olibanum Sachet',
         Head = 'Duelist\'s Chapeau',
         Neck = 'Peacock Amulet',
@@ -141,7 +141,7 @@ profile.Sets = {
             }
         }
     },
-    EvasionBalancedEngaged = {
+    EvasionBalanced = {
         Ammo = 'Olibanum Sachet',
         Head = 'Duelist\'s Chapeau',
         Neck = 'Evasion Torque',
@@ -156,7 +156,7 @@ profile.Sets = {
         Legs = 'Hydra Brais',
         Feet = 'Hydra Gaiters',
     },
-    PDTBalancedEngaged = {
+    PDTBalanced = {
         Head = 'Duelist\'s Chapeau',
         Neck = 'Evasion Torque',
         Ear1 = 'Hollow Earring',
@@ -484,21 +484,21 @@ profile.Sets = {
     },
 };
 profile.Packer = {};
+profile.Sets = Common.TableConcat(profile.Sets, Common.SharedSets);
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'DamageEngaged', 'AccuracyEngaged', 'EvasionEngaged', 'PDTEngaged', 'DamageBalancedEngaged', 'EvasionBalancedEngaged', 'PDTBalancedEngaged' }, 
+        { 'Damage', 'Accuracy', 'Evasion', 'PDT', 'DamageBalanced', 'EvasionBalanced', 'PDTBalanced' }, 
         { 'EarthStaff', 'SwordClub', 'DaggerClub', 'ClubSword', 'ClubDagger', 'ClubShield' }, 
         {  }, 
-        { 'EvasionIdle', 'PDTIdle' }, 
-        {  },
+        { 'EvasionIdle', 'PDTIdle' },
         525,
         725
     );
-    Common.SetDefaultStances(profile, 1, 1, 0, 1, 0);
+    Common.SetDefaultStances(profile, 1, 1, 0, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 3, 1, 3);
     Common.LoadDefaultKeybinds();
 end

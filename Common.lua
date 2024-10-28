@@ -24,7 +24,7 @@ local SpellPriorityTypes = {
   ['BlackMagicNukeAccuracy'] = { 'EleStaff', 'ElementalSkill', 'MagicAttack', 'Int' },
   ['BlackMagicNukeBalanced'] = { 'EleStaff', 'AccuracyPotencyBalanced' },
   ['BlackMagicNukeEnmity'] = {'EleStaff', 'EnmityMinus', 'MagicAttack', 'Int' },
-  ['BlackMagicNukeEnmityAccuracyBalanced'] = {'EleStaff', 'EnmityAccuracyBalanced' },
+  ['BlackMagicNukeEnmityAccuracyBalanced'] = {'EleStaff', 'ElementalSkill', 'PotencyEnmityMinus', 'MagicAttack', 'Int' },
   ['DarkSkillPotency'] = { 'EleStaff', 'DarkSkill', 'Recast', 'MagicAccuracy' },
   ['DarkSkillAccuracy'] = { 'EleStaff', 'DarkSkill', 'MagicAccuracy', 'Recast' },
   ['DrainAspirPotency'] = { 'EleStaff', 'DarkSkill', 'OverlordsRing', 'Recast', 'MagicAccuracy' },
@@ -538,12 +538,54 @@ local Food = {
   ['VermillionJelly'] = { MPP = 12, Max = 90 },
   ['Bretzel'] = { MPP = 8, MaxMP = 55 }, 
 };
+local RangedWeaponTypes = {
+  Marksmanship = 'Marksmanship',
+  Archery = 'Archery',
+  Throwing = 'Throwing'
+};
+local Ammo = {
+  [RangedWeaponTypes.Marksmanship] = {
+    BloodyBolt = { Name = 'Bloody Bolt', Type = RangedWeaponTypes.Marksmanship },
+    SleepBolt = { Name = 'Sleep Bolt', Type = RangedWeaponTypes.Marksmanship },
+    AcidBolt = { Name = 'Acid Bolt', Type = RangedWeaponTypes.Marksmanship }
+  }
+};
+local RangedWeapons = {
+  ['Ziska\'s Crossbow'] = RangedWeaponTypes.Marksmanship,
+  ['Ungur Boomerang'] = RangedWeaponTypes.Throwing
+};
+local SharedSets = {
+  Fishing = {
+    Body = 'Fsh. Tunica',
+    Hands = 'Fsh. Gloves',
+    Legs = 'Fisherman\'s Hose',
+    Feet = 'Fisherman\'s Boots',
+  },
+  FishingRod = {
+    Range = 'Lu Shang\'s F. Rod',
+  },
+  Helming = {
+    Body = 'Field Tunica',
+    Hands = 'Field Gloves',
+    Legs = 'Field Hose',
+    Feet = 'Field Boots',
+  }
+};
 
 local TableConcat = function(Table1, Table2)
-  for index = 1, #Table2 do
-    Table1[#Table1+1] = Table2[index]
+  for key, value in pairs(Table2) do
+    if (Table1[key] == nil) then
+      Table1[key] = value;
+    end
   end
-  return Table1
+  return Table1;
+end
+
+local ArrayConcat = function(Array1, Array2)
+  for index = 1, #Array2 do
+    Array1[#Array1+1] = Array2[index]
+  end
+  return Array1
 end
 
 local ShallowCopySet = function(set)
@@ -562,15 +604,16 @@ local ShallowCopyArray = function(array)
   return arrayCopy;
 end
 
-local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponStances, CustomRangedStances, CustomIdleStances, CustomAmmoStances, RestMPThreshhold, MaxMPRestMPThreshhold, FoodName)
-  local WeaponStances = TableConcat(CustomWeaponStances, { 'WarpStaff', 'WarpClub' });
-  local IdleStances =  TableConcat(CustomIdleStances, { 'Fishing', 'Helming' });
+local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponStances, CustomRangedStances, CustomIdleStances, RestMPThreshhold, MaxMPRestMPThreshhold, FoodName)
+  local WeaponStances = ArrayConcat(CustomWeaponStances, { 'WarpStaff', 'WarpClub' });
+  local RangedStance =  ArrayConcat(CustomRangedStances, { 'FishingRod' });
+  local IdleStances =  ArrayConcat(CustomIdleStances, { 'Fishing', 'Helming' });
+  
   profile.StanceLookup = {
     EngagedStance = CustomEngagedStances,
     WeaponStance = WeaponStances,
-    RangedStance = CustomRangedStances,
-    IdleStance = IdleStances,
-    AmmoStance = CustomAmmoStances
+    RangedStance = RangedStance,
+    IdleStance = IdleStances
   };
   profile.ModeLookup = {
     SpellMode = { 'SpellPotency', 'SpellAccuracy', 'SpellBalanced' },
@@ -589,6 +632,7 @@ local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponSt
   profile.MaxMPRestMPThreshhold = MaxMPRestMPThreshhold;
   profile.CastSpeed = false;
   profile.Food = nil;
+  profile.Ammo = '';
   if (FoodName ~= nil) then
     if (Food[FoodName] ~= nil) then
       profile.Food = FoodName;
@@ -599,13 +643,12 @@ local CreateDefaultData = function(profile, CustomEngagedStances, CustomWeaponSt
   end
 end
 
-local SetDefaultStances = function(profile, EngagedStance, WeaponStance, RangedStance, IdleStance, AmmoStance)
+local SetDefaultStances = function(profile, EngagedStance, WeaponStance, RangedStance, IdleStance)
   profile.Stance = {};
   profile.Stance.EngagedStance = EngagedStance;
   profile.Stance.WeaponStance = WeaponStance;
   profile.Stance.RangedStance = RangedStance;
   profile.Stance.IdleStance = IdleStance;
-  profile.Stance.AmmoStance = AmmoStance;
 end
 
 local SetDefaultModes = function(profile, SpellMode, WSMode, EnmityMode, TPMode, MPMode, InterimMode, ConquestMode, DefenseMode, MagicBurstMode, InstrumentMode)
@@ -629,13 +672,11 @@ local LoadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind !F2 /lac fwd Stance WeaponStance Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind !F3 /lac fwd Stance RangedStance Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind !F4 /lac fwd Stance IdleStance Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind !F5 /lac fwd Stance AmmoStance Plus');
 
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +!F1 /lac fwd Stance EngagedStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +!F2 /lac fwd Stance WeaponStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +!F3 /lac fwd Stance RangedStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind +!F4 /lac fwd Stance IdleStance Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/bind +!F5 /lac fwd Stance AmmoStance Minus');
   
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F1 /lac fwd Mode SpellMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F2 /lac fwd Mode WSMode Plus');
@@ -661,13 +702,11 @@ local UnloadDefaultKeybinds = function()
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind !F2 /lac fwd Stance WeaponStance Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind !F3 /lac fwd Stance RangedStance Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind !F4 /lac fwd Stance IdleStance Plus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind !F5 /lac fwd Stance AmmoStance Plus');
 
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +!F1 /lac fwd Stance EngagedStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +!F2 /lac fwd Stance WeaponStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +!F3 /lac fwd Stance RangedStance Minus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +!F4 /lac fwd Stance IdleStance Minus');
-  AshitaCore:GetChatManager():QueueCommand(-1, '/unbind +!F5 /lac fwd Stance AmmoStance Minus');
 
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F1 /lac fwd Mode SpellMode Plus');
   AshitaCore:GetChatManager():QueueCommand(-1, '/unbind ^F2 /lac fwd Mode WSMode Plus');
@@ -695,7 +734,7 @@ local DefaultCommandHandles = function(profile, args)
   local categoryString;
   if (category == 'SacHP') then
     profile.SacHPCounter = 1;
-    gFunc.Echo(255, 'You hurt yourself')
+    gFunc.Echo(255, 'You hurt yourself');
     return
   end
   if (category == 'Food') then
@@ -708,6 +747,10 @@ local DefaultCommandHandles = function(profile, args)
     else
       gFunc.Echo(255, 'Food not found');
     end
+    return;
+  end
+  if (category == 'Ammo') then
+    profile.Ammo = command;
     return;
   end
   if (profile[category][command] == 0) then
@@ -899,7 +942,7 @@ local BuildMaxMpSet = function(profile, setString, action, currentGear, overwrit
   end
   if (profile.Sets[setString] == nil) then return; end
   if (profile.Sets[setString].EquipOrder == nil) then
-    CombineSets(profile, setString, action, player, overwrite);
+    CombineSets(profile, setString, action, overwrite);
     return;
   end
   local currentMissingMp = profile.workingCurrentMissingMp;
@@ -1010,13 +1053,13 @@ local GetMidDelay = function(profile, player, action)
   local midDelay = profile.TrueCastSpeed - .3;
   return midDelay;
 end
-DefenseMode = { 'UseIdleStance', 'Evasion', 'PDT', 'MDT' };
+
 local GetInterimEquipSet = function(profile)  
   if (profile.ModeLookup.InterimMode[profile.Mode.InterimMode] == 'InterruptionInterim') then
     return 'InterruptionInterim';
   elseif (profile.ModeLookup.InterimMode[profile.Mode.InterimMode] == 'DefenseInterim') then
     if (profile.ModeLookup.DefenseMode[profile.Mode.DefenseMode] ~= 'UseIdleStance') then
-      return profile.ModeLookup.DefenseMode[profile.Mode.DefenseMode] .. 'Idle';
+      return profile.ModeLookup.DefenseMode[profile.Mode.DefenseMode];
     else
       return profile.StanceLookup.IdleStance[profile.Stance.IdleStance];
     end
@@ -1277,19 +1320,27 @@ end
 
 local HandlePreshot = function(profile)
   local currentGear = gData.GetEquipment();
-  if (Ammo[profile.StanceLookup.AmmoStance[profile.Stance.AmmoStance]].Type == RangedWeaponTypes[currentGear.Range.Name]) then
-    gFunc.Equip('Ammo', Ammo[profile.StanceLookup.AmmoStance[profile.Stance.AmmoStance]].Name)
+  local ammoData;
+  if (RangedWeapons[currentGear.Range.Name] == RangedWeaponTypes.Throwing) then
+    goto skipAmmo;
   end
+  ammoData = Ammo[RangedWeapons[currentGear.Range.Name]][profile.Ammo];
+  if (RangedWeapons[currentGear.Range.Name] == ammoData.Type) then
+    gFunc.Equip('Ammo', ammoData.Name);
+  end
+  ::skipAmmo::
 end
 
 local HandleMidshot = function(profile)
-  if (profile.Sets[profile.StanceLookup.AmmoStance[profile.Stance.AmmoStance]] ~= nil) then
-    gFunc.EquipSet(profile.Sets[profile.StanceLookup.AmmoStance[profile.Stance.AmmoStance]]);
+  profile.workingSet = {};
+  if (profile.Sets[profile.Ammo] ~= nil) then
+    CombineSets(profile, profile.Ammo, nil, false );
   elseif (profile.Sets[profile.StanceLookup.EngagedStance[profile.Stance.EngagedStance .. 'RA']] ~= nil) then
-    gFunc.EquipSet(profile.Sets[profile.StanceLookup.EngagedStance[profile.Stance.EngagedStance .. 'RA']]);
+    CombineSets(profile, (profile.Stance.EngagedStance .. 'RA'), nil, false );
   else
-    gFunc.EquipSet(profile.Sets['AccuracyRA']);
+    CombineSets(profile, 'AccuracyRA', nil, false);
   end
+  gFunc.EquipSet(profile.workingSet);
 end
 
 local HandleWeaponskill = function(profile)
@@ -1314,6 +1365,8 @@ return {
   HandleAbility = HandleAbility,
   HandlePreshot = HandlePreshot,
   HandleMidshot = HandleMidshot,
-  HandleWeaponskill = HandleWeaponskill
+  HandleWeaponskill = HandleWeaponskill,
+  SharedSets = SharedSets,
+  TableConcat = TableConcat
 };
 

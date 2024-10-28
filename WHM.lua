@@ -31,7 +31,7 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Cudgel'
     },
-    HasteEngaged = {
+    Damage = {
         Ammo = 'Olibanum Sachet',
         Head = 'Nashira Turban',
         Neck = 'Prudence Torque',
@@ -51,7 +51,7 @@ profile.Sets = {
             },
         }
     },
-    AccuracyEngaged = {
+    Accuracy = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
@@ -71,7 +71,7 @@ profile.Sets = {
             },
         }
     },
-    EvasionEngaged = {
+    Evasion = {
         Ammo = 'Olibanum Sachet',
         Head = 'Optical Hat',
         Neck = 'Evasion Torque',
@@ -436,21 +436,21 @@ profile.Sets = {
     }
 };
 profile.Packer = {};
+profile.Sets = Common.TableConcat(profile.Sets, Common.SharedSets);
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'HasteEngaged', 'AccuracyEngaged', 'EvasionEngaged' }, 
+        { 'Damage', 'Accuracy', 'Evasion' }, 
         { 'Staff', 'MPClubClub', 'DPSClubClub', 'ClubShield' }, 
         {  }, 
-        { 'EvasionIdle' }, 
-        {  },
+        { 'EvasionIdle' },
         675,
         825
     );
-    Common.SetDefaultStances(profile, 1, 1, 0, 1, 0);
+    Common.SetDefaultStances(profile, 1, 1, 0, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
 end

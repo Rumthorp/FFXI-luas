@@ -32,24 +32,22 @@ profile.Sets = {
         Sub = 'Tatami Shield'
     },
     Crossbow = {
-        Range = 'Ziska\'s Crossbow',
-        WeaponType = 'Crossbow'
+        Range = 'Ziska\'s Crossbow'
     },
     Boomerang = {
-        Range = 'Ungur Boomerang',
-        WeaponType = 'Throwing'
+        Range = 'Ungur Boomerang'
     },
     WarpStaff = {
         Main = 'Treat Staff II'
     },
     WarpClub = {
-        Main = 'Warp Club'
+        Main = 'Warp Cudgel'
     },
-    HasteEngaged = {
+    Damage = {
         Head = 'Homam Zucchetto',
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Stealth Earring',
+        Ear2 = 'Suppanomimi',
         Body = 'Rapparee Harness',
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
@@ -58,8 +56,19 @@ profile.Sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
+        AltGear = {
+            Feet = {
+                { Condition = 'IsMoving', Name = 'Trotter Boots' }
+            },
+            Hands = {
+                { Condition = 'IsMoving', Name = 'Homam Manopolas' }
+            },
+            Ear2 = {
+                { Condition = 'IsDualWielding', Name = 'Stealth Earring' }
+            }
+        },
     },
-    AccuracyEngaged = {
+    Accuracy = {
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
         Ear1 = 'Suppanomimi',
@@ -72,8 +81,13 @@ profile.Sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
+        AltGear = {
+            Feet = {
+                { Condition = 'IsMoving', Name = 'Trotter Boots' }
+            }
+        },
     },
-    EvasionEngaged = {
+    Evasion = {
         Head = 'Emperor Hairpin',
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
@@ -85,7 +99,12 @@ profile.Sets = {
         Back = 'Boxer\'s Mantle',
         Waist = 'Scouter\'s Rope',
         Legs = 'Raven Hose',
-        Feet = 'Dance Shoes'
+        Feet = 'Dance Shoes',
+        AltGear = {
+            Feet = {
+                { Condition = 'IsMoving', Name = 'Trotter Boots' }
+            }
+        },
     },
     EvasionIdle = {
         Head = 'Emperor Hairpin',
@@ -100,6 +119,11 @@ profile.Sets = {
         Waist = 'Scouter\'s Rope',
         Legs = 'Raven Hose',
         Feet = 'Dance Shoes',
+        AltGear = {
+            Feet = {
+                { Condition = 'IsMoving', Name = 'Trotter Boots' }
+            }
+        },
     },
     SacHP = {
         Head = 'Emperor Hairpin',
@@ -203,7 +227,7 @@ profile.Sets = {
         Body = 'Rapparee Harness',
         Ring1 = 'Coral Ring',
         Ring2 = 'Coral Ring',
-        Back = 'Amemet Mantle',
+        Back = 'Jaeger Mantle',
         Waist = 'Scouter\'s Rope',
         Legs = 'Dusk Trousers',
         Feet = 'Homam Gambieras',
@@ -216,8 +240,10 @@ profile.Sets = {
         Body = 'Blue Cotehardie',
         Hands = 'Wood Gauntlets',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Jaeger Mantle',
         Waist = 'Forest Rope',
+        Legs = 'Dusk Trousers',
         Feet = 'Wood M Ledelsens'
     },
     Charm = {
@@ -297,6 +323,7 @@ profile.Sets = {
     }
 };
 profile.Sets['EnergyStealPotency'] = profile.Sets['EnergyDrainPotency'];
+profile.Sets = Common.TableConcat(profile.Sets, Common.SharedSets);
 profile.Packer = {
 };
 local IgnoreTHSpells = T{
@@ -314,12 +341,11 @@ profile.OnLoad = function()
         { 'Damage', 'Accuracy', 'Evasion' }, 
         { 'DaggerClub', 'DaggerDagger', 'DaggerShield', 'Unarmed', 'SwordShield' }, 
         { 'Crossbow', 'Boomerang' }, 
-        { 'IdleEvasion' }, 
-        { 'BloodyBolt', 'SleepBolt', 'AcidBolt' },
+        { 'EvasionIdle' },
         80
     );
-    Common.SetDefaultStances(profile, 1, 1, 1, 1, 1);
-    Common.SetDefaultModes(profile, 1, 1, 1, 2, 1, 2, 1, 3);
+    Common.SetDefaultStances(profile, 1, 1, 1, 1);
+    Common.SetDefaultModes(profile, 1, 1, 1, 2, 1, 3, 1, 1);
     Common.LoadDefaultKeybinds();
 end
 

@@ -42,7 +42,7 @@ profile.Sets = {
     WarpClub = {
         Main = 'Warp Cudgel'
     },
-    HasteEngaged = {
+    Haste = {
         Range = 'Angel Lyre',
         Head = 'Patroclus\'s Helm',
         Neck = 'Peacock Amulet',
@@ -68,7 +68,7 @@ profile.Sets = {
             }
         }
     },
-    AccuracyEngaged = {
+    Accuracy = {
         Range = 'Angel Lyre',
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
@@ -341,21 +341,21 @@ profile.Sets = {
     }
 };
 profile.Packer = {};
+profile.Sets = Common.TableConcat(profile.Sets, Common.SharedSets);
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     gFunc.LockStyle(profile.Sets.Lockstyle);
     Common.CreateDefaultData(
         profile, 
-        { 'HasteEngaged', 'AccuracyEngaged' }, 
+        { 'Damage', 'Accuracy' }, 
         { 'TerrasStaff', 'DaggerShield', 'SwordShield', 'DaggerClub', 'SwordClub', 'DaggerSword', 'SwordDagger' }, 
-        {  }, 
-        { 'EvasionIdle', 'PDTIdle' }, 
-        {  },
+        { 'None' }, 
+        { 'EvasionIdle', 'PDTIdle' },
         100,
         400
     );
-    Common.SetDefaultStances(profile, 1, 1, 0, 1, 0);
+    Common.SetDefaultStances(profile, 1, 1, 0, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F9 /lac fwd Mode InstrumentMode Plus');

@@ -329,8 +329,21 @@ profile.Sets = {
             { Slot = 'Waist', MPValue = .05 },
         }
     },
-    AccuracyPotencyBalanced = {
-
+    PotencyEnmityMinus = {
+        Head = 'Wizard\'s Petas.',
+        Body = 'Errant Hpl.',
+        Hands = 'Wizard\'s Gloves',
+        Ring2 = 'Tamas Ring',
+        Waist = 'Penitent\'s Rope',
+        Legs = 'Errant Slops',
+        EquipOrder = {
+            { Slot = 'Body', MPValue = 9 },
+            { Slot = 'Ring2', MPValue = .25 },
+            { Slot = 'Head', MPValue = .16 },
+            { Slot = 'Legs', MPValue = .12 },
+            { Slot = 'Hands', MPValue = .1 },
+            { Slot = 'Waist', MPValue = .05 },
+        }
     },
     EnmityAccuracyBalanced = {
 
@@ -379,6 +392,7 @@ profile.Sets = {
     }
 };
 profile.Packer = {};
+profile.Sets = Common.TableConcat(profile.Sets, Common.SharedSets);
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
@@ -387,13 +401,12 @@ profile.OnLoad = function()
         profile, 
         {  }, 
         { 'EarthStaff', }, 
-        {  }, 
-        { 'MPBalanced', 'EvasionIdle', 'PDTIdle' }, 
-        {  },
+        { 'None' }, 
+        { 'MPBalanced', 'EvasionIdle', 'PDTIdle' },
         675,
         825
     );
-    Common.SetDefaultStances(profile, 0, 1, 0, 1, 0);
+    Common.SetDefaultStances(profile, 0, 1, 1, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
     AshitaCore:GetChatManager():QueueCommand(-1, '/bind ^F8 /lac fwd Mode DefenseMode Plus');
