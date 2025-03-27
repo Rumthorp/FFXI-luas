@@ -435,6 +435,7 @@ local MPGear = {
   ['Duelist\'s Boots'] = { MP = 15, Convert = false, Slot = 'Feet' },
   ['Hierarch Belt'] = { MP = 48, Convert = false, Slot = 'Waist' },
   ['Zenith Crown'] = { MP = 50, Convert = true, Slot = 'Head' },
+  ['Dalmatica'] = { MP = 50, Convert = true, Slot = 'Body' },
   ['Zenith Mitts'] = { MP = 50, Convert = true, Slot = 'Hands' },
   ['Zenith Slacks'] = { MP = 50, Convert = true, Slot = 'Legs' },
   ['Blue Cotehardie'] = { MP = 40, Convert = true, Slot = 'Body' },

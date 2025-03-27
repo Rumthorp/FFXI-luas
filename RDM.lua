@@ -40,7 +40,7 @@ profile.Sets = {
         Main = 'Treat Staff II'
     },
     WarpClub = {
-        Main = 'Warp Club'
+        Main = 'Warp Cudgel'
     },
     Damage = {
         Ammo = 'Olibanum Sachet',
@@ -181,11 +181,11 @@ profile.Sets = {
     },
     MaxMP = {
         Ammo = 'Hedgehog Bomb',             -- 30
+        Body = 'Dalmatica',                 -- 50
         Head = 'Duelist\'s Chapeau',        -- 14
         Neck = 'Uggalepih Pendant',         -- 20
         Ear1 = 'Loquac. Earring',           -- 30
         Ear2 = 'Astral Earring',            -- 25
-        Body = 'Hydra Doublet',             -- 40
         Hands = 'Wood Gauntlets',           -- 55
         Ring1 = 'Vivian Ring',              -- 50
         Ring2 = 'Serket Ring',              -- 50
@@ -275,7 +275,7 @@ profile.Sets = {
     SacHP = {
         Head = 'Zenith Crown',
         Ear2 = 'Astral Earring',
-        Body = 'Blue Cotehardie',
+        Body = 'Dalmatica',
         Hands = 'Zenith Mitts',
         Ring1 = 'Vivian Ring',
         Ring2 = 'Serket Ring',
@@ -283,7 +283,7 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Mahatma Pigaches',
         EquipOrder = {
-            { Slot = 'Body', MPValue = 40 },
+            { Slot = 'Body', MPValue = 50 },
             { Slot = 'Feet', MPValue = 5 },
             { Slot = 'Waist', MPValue = .67 },
             { Slot = 'Head', MPValue = 0 },
@@ -493,12 +493,12 @@ profile.OnLoad = function()
         profile, 
         { 'Damage', 'Accuracy', 'Evasion', 'PDT', 'DamageBalanced', 'EvasionBalanced', 'PDTBalanced' }, 
         { 'EarthStaff', 'SwordClub', 'DaggerClub', 'ClubSword', 'ClubDagger', 'ClubShield' }, 
-        {  }, 
+        { 'None' }, 
         { 'EvasionIdle', 'PDTIdle' },
         525,
         725
     );
-    Common.SetDefaultStances(profile, 1, 1, 0, 1);
+    Common.SetDefaultStances(profile, 1, 1, 1, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 3, 1, 3);
     Common.LoadDefaultKeybinds();
 end

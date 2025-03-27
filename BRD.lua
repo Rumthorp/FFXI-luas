@@ -126,7 +126,7 @@ profile.Sets = {
         Neck = 'Uggalepih Pendant',         -- 20
         Ear1 = 'Loquac. Earring',           -- 30
         Ear2 = 'Astral Earring',            -- 25
-        Body = 'Hydra Doublet',             -- 40
+        Body = 'Dalmatica',                 -- 50
         Hands = 'Wood Gauntlets',           -- 55
         Ring1 = 'Vivian Ring',              -- 50
         Ring2 = 'Serket Ring',              -- 50
@@ -306,7 +306,7 @@ profile.Sets = {
     SacHP = {
         Head = 'Zenith Crown',
         Ear2 = 'Astral Earring',
-        Body = 'Assault Jerkin',
+        Body = 'Dalmatica',
         Hands = 'Zenith Mitts',
         Ring1 = 'Vivian Ring',
         Ring2 = 'Serket Ring',
@@ -314,6 +314,7 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
+            { Slot = 'Body', MPValue = 50 },
             { Slot = 'Head', MPValue = 50 },
             { Slot = 'Hands', MPValue = 50 },
             { Slot = 'Ring1', MPValue = 50 },
@@ -321,7 +322,6 @@ profile.Sets = {
             { Slot = 'Legs', MPValue = 50 },
             { Slot = 'Feet', MPValue = 30 },
             { Slot = 'Ear2', MPValue = 25 },
-            { Slot = 'Body', MPValue = .28 },
             { Slot = 'Waist', MPValue = .67 },
         }
     },

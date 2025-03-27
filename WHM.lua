@@ -445,12 +445,12 @@ profile.OnLoad = function()
         profile, 
         { 'Damage', 'Accuracy', 'Evasion' }, 
         { 'Staff', 'MPClubClub', 'DPSClubClub', 'ClubShield' }, 
-        {  }, 
+        { 'None' }, 
         { 'EvasionIdle' },
         675,
         825
     );
-    Common.SetDefaultStances(profile, 1, 1, 0, 1);
+    Common.SetDefaultStances(profile, 1, 1, 1, 1);
     Common.SetDefaultModes(profile, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1);
     Common.LoadDefaultKeybinds();
 end

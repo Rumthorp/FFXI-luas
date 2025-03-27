@@ -26,7 +26,7 @@ profile.Sets = {
         Neck = 'Uggalepih Pendant',         -- 20
         Ear1 = 'Loquac. Earring',           -- 30
         Ear2 = 'Astral Earring',            -- 25
-        Body = 'Sorcerer\'s Coat',          -- 12
+        Body = 'Dalmatica',                 -- 50
         Hands = 'Wood Gauntlets',           -- 55
         Ring1 = 'Vivian Ring',              -- 50
         Ring2 = 'Serket Ring',              -- 50
@@ -41,7 +41,7 @@ profile.Sets = {
         Neck = 'Evasion Torque',
         Ear1 = 'Novia Earring',
         Ear2 = 'Suppanomimi',
-        Body = 'Sorcerer\'s Coat',
+        Body = 'Hydra Doublet',
         Hands = 'Zenith Mitts',
         Ring1 = 'Coral Ring',
         Ring2 = 'Tamas Ring',
@@ -357,6 +357,7 @@ profile.Sets = {
     SacHP = {
         Head = 'Zenith Crown',
         Ear2 = 'Astral Earring',
+        Body = 'Dalmatica',
         Hands = 'Zenith Mitts',
         Ring1 = 'Vivian Ring',
         Ring2 = 'Serket Ring',
@@ -364,6 +365,7 @@ profile.Sets = {
         Legs = 'Zenith Slacks',
         Feet = 'Rostrum Pumps',
         EquipOrder = {
+            { Slot = 'Body', MPValue = 50 },
             { Slot = 'Head', MPValue = 50 },
             { Slot = 'Hands', MPValue = 50 },
             { Slot = 'Ring1', MPValue = 50 },
